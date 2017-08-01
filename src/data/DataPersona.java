@@ -12,8 +12,7 @@ public class DataPersona {
 		ResultSet rs = null;
 		ArrayList<Persona> personas = new ArrayList<Persona>();
 		try {
-			stmt = FactoryConexion.getInstancia()
-					.getConn().createStatement();
+			stmt = FactoryConexion.getInstancia().getConn().createStatement();
 			rs = stmt.executeQuery("select * from persona");
 			if(rs!=null){
 				while(rs.next()){

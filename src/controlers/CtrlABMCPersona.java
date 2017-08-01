@@ -7,10 +7,6 @@ import data.DataPersona;
 
 public class CtrlABMCPersona {
 	private DataPersona datap;
-	/*
-	 * hola
-	 * 
-	 */
 	public CtrlABMCPersona(){
 		datap = new DataPersona();
 	}
