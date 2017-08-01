@@ -6,7 +6,6 @@ import controlers.*;
 
 
 public class ABMCPersonaConsole {
-	
 	private Scanner s;
 	private  CtrlABMCPersona ctrl;
 	public ABMCPersonaConsole()
