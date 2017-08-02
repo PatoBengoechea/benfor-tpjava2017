@@ -133,7 +133,7 @@ public class DataPersona {
 			stmt.setString(2, per.getApellido());
 			stmt.setBoolean(3, per.isHabilitado());
 			stmt.setString(4, per.getUsuario());
-			stmt.setString(5, per.getContraseÃ±a());
+			stmt.setString(5, per.getContraseña());
 			stmt.setInt(6, per.getId());
 			stmt.executeUpdate();
 			}

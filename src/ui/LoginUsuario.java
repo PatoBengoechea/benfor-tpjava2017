@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JList;
+import javax.swing.JToolBar;
+import java.awt.FlowLayout;
 
 public class LoginUsuario extends JFrame {
 
@@ -57,6 +59,11 @@ public class LoginUsuario extends JFrame {
 		setContentPane(contentPane);
 		ctrl = new CtrlABMCPersona();
 		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1, BorderLayout.NORTH);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -65,17 +72,21 @@ public class LoginUsuario extends JFrame {
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Persona usu = new Persona();
-				Persona per = new Persona();
-				usu.setUsuario(txtUsu.getText());
-				usu.setContraseña(txtPass.getText());
-				per = ctrl.buscarUsuario(usu);
-					if (per != null) {
-				lblEncontro.setText("Bienvenido " + per.getNombre());
-				}
-				else {
-					lblEncontro.setText("Usuario no encontrado");
-				}
+//			Persona usu = new Persona();
+//				Persona per = new Persona();
+//				usu.setUsuario(txtUsu.getText());
+//				usu.setContrase�a(txtPass.getText());
+//				per = ctrl.buscarUsuario(usu);
+//					if (per != null) {
+//				lblEncontro.setText("Bienvenido " + per.getNombre());
+				Comprar vc = new Comprar();
+				LoginUsuario vlogin = new LoginUsuario();
+				vc.main(null);
+				vlogin.setVisible(false);
+//				}
+//				else {
+//					lblEncontro.setText("Usuario no encontrado");
+//				}
 				
 			}
 
@@ -98,12 +109,12 @@ public class LoginUsuario extends JFrame {
 		lblUsuario.setBounds(46, 39, 61, 16);
 		panel.add(lblUsuario);
 		
-		JLabel lblContrasea = new JLabel("Contraseña");
+		JLabel lblContrasea = new JLabel("Contrasea");
 		lblContrasea.setBounds(46, 116, 76, 16);
 		panel.add(lblContrasea);
 		
-		JLabel lblEncontro = new JLabel("--");
-		lblEncontro.setBounds(173, 178, 61, 16);
-		panel.add(lblEncontro);
+		JLabel lblEncontro_1 = new JLabel("--");
+		lblEncontro_1.setBounds(173, 178, 61, 16);
+		panel.add(lblEncontro_1);
 	}
 }

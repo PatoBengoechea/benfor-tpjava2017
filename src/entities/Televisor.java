@@ -6,11 +6,14 @@ public class Televisor {
 	private String descripcion;
 	private int cantidad;
 	private String modelo;
-	private float precio;
-	public float getPrecio() {
+	private double precio;
+	public double getPrecio() {
 		return precio;
 	}
-	public void setPrecio(float precio) {
+	public String getSPrecio(){
+		return ("" + precio + "");
+	}
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 	public int getIdTelevisor() {
