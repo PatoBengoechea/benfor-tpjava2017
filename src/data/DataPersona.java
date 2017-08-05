@@ -17,7 +17,7 @@ public class DataPersona {
 			if(rs!=null){
 				while(rs.next()){
 					Persona p=new Persona();
-					p.setId(rs.getInt("id"));
+					p.setIdPersona(rs.getInt("idPersona"));
 					p.setNombre(rs.getString("nombre"));
 					p.setApellido(rs.getString("apellido"));
 					p.setDni(rs.getString("dni"));
@@ -45,12 +45,12 @@ public class DataPersona {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select id, nombre, apellido, dni, habilitado from persona where dni=?");
+					"select idPersona, nombre, apellido, dni, habilitado from persona where dni=?");
 			stmt.setString(1, per.getDni());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
 					p=new Persona();
-					p.setId(rs.getInt("id"));
+					p.setIdPersona(rs.getInt("idPersona"));
 					p.setNombre(rs.getString("nombre"));
 					p.setApellido(rs.getString("apellido"));
 					p.setDni(rs.getString("dni"));
@@ -87,7 +87,7 @@ public class DataPersona {
 			stmt.executeUpdate();
 			keyResultSet=stmt.getGeneratedKeys();
 			if(keyResultSet!=null && keyResultSet.next()){
-				p.setId(keyResultSet.getInt(1));
+				p.setIdPersona(keyResultSet.getInt(1));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -128,13 +128,13 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update persona(nombre, apellido, habilitado, usuario, contraseña) values (?,?,?, ?,?) where id = ?");
+					"update persona(nombre, apellido, habilitado, usuario, contraseña) values (?,?,?, ?,?) where idPersona = ?");
 			stmt.setString(1, per.getNombre());
 			stmt.setString(2, per.getApellido());
 			stmt.setBoolean(3, per.isHabilitado());
 			stmt.setString(4, per.getUsuario());
-			stmt.setString(5, per.getContrase�a());
-			stmt.setInt(6, per.getId());
+			stmt.setString(5, per.getContrase�a());
+			stmt.setInt(6, per.getIdPersona());
 			stmt.executeUpdate();
 			}
 		catch (SQLException e) {
@@ -153,9 +153,9 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update persona(habilitado) values (?) where id = ?");
+					"update persona(habilitado) values (?) where idPersona = ?");
 			stmt.setBoolean(1, false);
-			stmt.setInt(2, per.getId());
+			stmt.setInt(2, per.getIdPersona());
 			stmt.executeUpdate();
 			}
 		catch (SQLException e) {

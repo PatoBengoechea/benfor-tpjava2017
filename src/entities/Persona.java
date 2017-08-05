@@ -6,7 +6,7 @@ public class Persona {
 	private String apellido;
 	private String dni;
 	private boolean habilitado;
-	private int id;
+	private int idPersona;
 	public boolean isHabilitado() {
 		return habilitado;
 	}
@@ -15,7 +15,7 @@ public class Persona {
 		this.habilitado = habilitado;
 	}
 	private String usuario;
-	private String contraseña;
+	private String contraseï¿½a;
 	public static int ultnro;
 	
 	public Persona() {
@@ -28,7 +28,7 @@ public class Persona {
 		this.dni = dni;
 		this.habilitado = true;
 		this.usuario = usu;
-		this.contraseña = contra;
+		this.contraseï¿½a = contra;
 		this.id = ultnro++;
 	}
 	
@@ -50,11 +50,11 @@ public class Persona {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-	public int getId() {
-		return id;
+	public int getIdPersona() {
+		return idPersona;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdPersona(int id) {
+		this.idPersona = id;
 	}
 	public String getUsuario() {
 		return usuario;
@@ -62,11 +62,11 @@ public class Persona {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseï¿½a() {
+		return contraseï¿½a;
 	}
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseï¿½a(String contraseï¿½a) {
+		this.contraseï¿½a = contraseï¿½a;
 	}
 	
 
