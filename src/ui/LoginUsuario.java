@@ -92,7 +92,7 @@ public class LoginUsuario extends JFrame {
 
 
 		});
-		btnIngresar.setBounds(158, 206, 117, 29);
+		btnIngresar.setBounds(253, 201, 117, 29);
 		panel.add(btnIngresar);
 		
 		txtUsu = new JTextField();
@@ -116,5 +116,9 @@ public class LoginUsuario extends JFrame {
 		JLabel lblEncontro_1 = new JLabel("--");
 		lblEncontro_1.setBounds(173, 178, 61, 16);
 		panel.add(lblEncontro_1);
+		
+		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse.setBounds(46, 204, 89, 23);
+		panel.add(btnRegistrarse);
 	}
 }

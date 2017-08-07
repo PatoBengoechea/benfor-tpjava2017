@@ -15,7 +15,7 @@ public class Persona {
 		this.habilitado = habilitado;
 	}
 	private String usuario;
-	private String contrase�a;
+	private String password;
 	public static int ultnro;
 	
 	public Persona() {
@@ -28,8 +28,8 @@ public class Persona {
 		this.dni = dni;
 		this.habilitado = true;
 		this.usuario = usu;
-		this.contrase�a = contra;
-		this.id = ultnro++;
+		this.password = contra;
+		this.idPersona = ultnro++;
 	}
 	
 	public String getNombre() {
@@ -62,11 +62,11 @@ public class Persona {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	public String getContrase�a() {
-		return contrase�a;
+	public String getPassword() {
+		return password;
 	}
-	public void setContrase�a(String contrase�a) {
-		this.contrase�a = contrase�a;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 

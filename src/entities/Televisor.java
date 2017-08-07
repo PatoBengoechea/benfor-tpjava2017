@@ -6,8 +6,8 @@ public class Televisor {
 	private String descripcion;
 	private int cantidad;
 	private String modelo;
-	private double precio;
-	public double getPrecio() {
+	private Double precio;
+	public Double getPrecio() {
 		return precio;
 	}
 	public String getSPrecio(){

@@ -128,12 +128,12 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update persona(nombre, apellido, habilitado, usuario, contraseña) values (?,?,?, ?,?) where idPersona = ?");
+					"update persona(nombre, apellido, habilitado, usuario, password) values (?,?,?, ?,?) where idPersona = ?");
 			stmt.setString(1, per.getNombre());
 			stmt.setString(2, per.getApellido());
 			stmt.setBoolean(3, per.isHabilitado());
 			stmt.setString(4, per.getUsuario());
-			stmt.setString(5, per.getContrase�a());
+			stmt.setString(5, per.getPassword());
 			stmt.setInt(6, per.getIdPersona());
 			stmt.executeUpdate();
 			}
