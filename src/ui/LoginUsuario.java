@@ -118,6 +118,15 @@ public class LoginUsuario extends JFrame {
 		panel.add(lblEncontro_1);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
+		btnRegistrarse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				nuevoUser vc = new nuevoUser();
+				LoginUsuario vlogin = new LoginUsuario();
+				vc.main(null);
+				vlogin.setVisible(false);
+			}
+		});
 		btnRegistrarse.setBounds(46, 204, 89, 23);
 		panel.add(btnRegistrarse);
 	}
