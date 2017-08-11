@@ -16,6 +16,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -36,19 +37,21 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JTable;
 
 public class Comprar {
 
 	private JFrame frame;
+	String[] columnNames = {"IdProd","Marca","Modelo","Descripcion","Precio",};
+	Object[][] datos = {};
 	private JFormattedTextField txtPrecio;
-	private JList list;
-	private DefaultListModel modelo;
-	private DefaultListModel nuevomodelo;
+	private DefaultTableModel modelo;
+	private DefaultTableModel nuevomodelo;
 	private JScrollPane scrollLista;
-	private String[] datos;
 	ArrayList<Televisor> televisores;
 	ArrayList<Televisor> carrito;
 	private JLabel lblResultado;
+	private JTable table;
 	
 	/**
 	 * Launch the application.
@@ -111,13 +114,14 @@ public class Comprar {
 		televisores.add(tele1);
 		televisores.add(tele2);
 		televisores.add(tele3);
-		datos = new String[televisores.size()];
+		int tam = televisores.size();
+		modelo= new DefaultTableModel(datos,columnNames);
+		final JTable table = new JTable(modelo);
+		modelo.addRow(columnNames);
 		for (Televisor tel : televisores) {
-			String datostele ="     " + tel.getMarca() + "   ---   " + tel.getModelo() + "   ---   " + tel.getSPrecio()+ "   ---   " + tel.getDescripcion() + "   ---   ";
-			datos[televisores.indexOf(tel)] = datostele;
+			Object[] newRow= {tel.getIdTelevisor(),tel.getMarca(),tel.getModelo(), tel.getDescripcion(), tel.getPrecio()};
+			modelo.addRow(newRow);
 		}
-		list = new JList(datos);
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		
 		
 
@@ -126,10 +130,10 @@ public class Comprar {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				int indice = 0;
-				indice = list.getSelectedIndex();
+				indice = table.getSelectedRow();
 				if(indice != 0){
 				Televisor teleact = new Televisor();
-				teleact = televisores.get(indice);
+				teleact = televisores.get(indice-1);
 				lblResultado.setText("Compro: " + teleact.getMarca() + " " + teleact.getModelo());
 				carrito.add(televisores.get(indice));}
 			}
@@ -143,23 +147,23 @@ public class Comprar {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Double valor = Double.parseDouble(txtPrecio.getText());
-				//if(valor = 7){
 				double nv = valor.doubleValue(); 
 				actualizarListaPrecio(nv);
 			}
-
-			private void actualizarListaPrecio(double prec) {
-				nuevomodelo = new DefaultListModel();
+			private void actualizarListaPrecio(double prec){
+				Object[][] datosnuevos = {};
+				nuevomodelo = new DefaultTableModel(datosnuevos, columnNames);
+				table.setModel(nuevomodelo);
+				nuevomodelo.addRow(columnNames);
 				for (Televisor tel : televisores) {
-					if(tel.getPrecio().doubleValue() > prec )
-						nuevomodelo.addElement("     " + tel.getMarca() + "   ---   " + tel.getModelo() + "   ---   " + tel.getSPrecio()+ "   ---   " + tel.getDescripcion() + "   ---   ");
+					if(tel.getPrecio().doubleValue() < prec ){
+						Object[] newRow= {tel.getIdTelevisor(),tel.getMarca(),tel.getModelo(), tel.getDescripcion(), tel.getPrecio()};
+						nuevomodelo.addRow(newRow);
+					}
 				}
-				if(nuevomodelo.isEmpty()){
-					nuevomodelo.addElement("No hay televisores menores a dicho precio");
-				}
-				list.setModel(nuevomodelo);
 			}
 		});
+		
 		
 		JLabel lblPrecio = new JLabel("Precio:");
 		MaskFormatter mascara = null;
@@ -177,10 +181,11 @@ public class Comprar {
 		
 		
 		lblResultado = new JLabel("---------");
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGap(42)
 					.addComponent(btnBuscar)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -189,16 +194,19 @@ public class Comprar {
 					.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(27)
 					.addComponent(lblResultado)
-					.addPreferredGap(ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
 					.addComponent(btnComprar)
 					.addGap(34))
-				.addComponent(list, GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(list, GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-					.addGap(18)
+					.addComponent(table, GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnBuscar)
 						.addComponent(lblPrecio)

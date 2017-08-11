@@ -72,22 +72,10 @@ public class LoginUsuario extends JFrame {
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//			Persona usu = new Persona();
-//				Persona per = new Persona();
-//				usu.setUsuario(txtUsu.getText());
-//				usu.setContraseña(txtPass.getText());
-//				per = ctrl.buscarUsuario(usu);
-//					if (per != null) {
-//				lblEncontro.setText("Bienvenido " + per.getNombre());
 				Comprar vc = new Comprar();
 				LoginUsuario vlogin = new LoginUsuario();
 				vc.main(null);
-				vlogin.setVisible(false);
-//				}
-//				else {
-//					lblEncontro.setText("Usuario no encontrado");
-//				}
-				
+				vlogin.setVisible(false);			
 			}
 
 
