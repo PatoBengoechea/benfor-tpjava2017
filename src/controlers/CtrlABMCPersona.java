@@ -30,4 +30,8 @@ public class CtrlABMCPersona {
 		datap.delete(per);
 		datap.add(per);
 	}
+	public Persona buscarPersona(Persona per){
+		return datap.getByDni(per);
+	}
+	
 }
