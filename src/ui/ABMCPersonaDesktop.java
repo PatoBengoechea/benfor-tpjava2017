@@ -29,6 +29,7 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 	private JTextField txtApellido;
 	private JTextField txtDni;
 	private JTextField txtId;
+	private JCheckBox chkHabilitado;
 
 	/**
 	 * Launch the application.
@@ -91,7 +92,7 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		
 		JButton btnModificar = new JButton("Modificar");
 		
-		JCheckBox chkHabilitado = new JCheckBox("Habilitado");
+		chkHabilitado = new JCheckBox("Habilitado");
 		chkHabilitado.setSelected(true);
 		
 		JButton btnBuscar = new JButton("Buscar");
@@ -178,15 +179,15 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		getContentPane().setLayout(groupLayout);
 
 	}
-	public void agregarClick()
+	protected void agregarClick()
 	{
 		ctrl.addPersona(this.mapearDeForm());
 	}
-	public void modificarClick()
+	protected void modificarClick()
 	{
 		ctrl.updatePersona(this.mapearDeForm());
 	}
-	public void buscarClick()
+	protected void buscarClick()
 	{
 		ctrl.buscarPersona(this.mapearDeForm());
 	}
@@ -194,7 +195,7 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		this.txtDni.setText(p.getDni());
 		this.txtNombre.setText(p.getNombre());
 		this.txtApellido.setText(p.getApellido());
-		//this.chkHabilitado.setSelected(p.isHabilitado());
+		this.chkHabilitado.setSelected(p.isHabilitado());
 	}
 	
 	private Persona mapearDeForm(){
@@ -202,7 +203,7 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		p.setDni(this.txtDni.getText());
 		p.setNombre(this.txtNombre.getText());
 		p.setApellido(this.txtApellido.getText());
-		//p.setHabilitado(this.chkHabilitado.isSelected());
+		p.setHabilitado(this.chkHabilitado.isSelected());
 		return p;
 	}
 }
