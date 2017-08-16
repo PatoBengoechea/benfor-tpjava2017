@@ -72,7 +72,7 @@ public class LoginUsuario extends JFrame {
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Comprar vc = new Comprar();
+				Reservar vc = new Reservar();
 				LoginUsuario vlogin = new LoginUsuario();
 				vc.main(null);
 				vlogin.setVisible(false);			
