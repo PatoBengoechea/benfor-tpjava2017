@@ -3,14 +3,13 @@ package ui;
 import entities.Elemento;
 import entities.TipoElemento;
 import entities.Persona;
-
+import javax.swing.JSpinner;
 import java.awt.EventQueue;
 import java.awt.Label;
-
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-
+import java.util.*;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.DefaultListModel;
@@ -19,6 +18,7 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.StyledEditorKit.ForegroundAction;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -28,6 +28,7 @@ import javax.swing.SpinnerListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.*;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +50,7 @@ public class Reservar {
 
 	private JFrame frame;
 	Object[][] datos = {};
-	private JTextField txtPrecio;
+	private JTextField txtFechaInicio;
 	private DefaultTableModel modelo;
 	private DefaultTableModel nuevomodelo;
 	private JScrollPane scrollLista;
@@ -62,7 +63,11 @@ public class Reservar {
 	public List<String> tipos;
 	private JLabel lblResultado;
 	private JTable table;
-	private JTextField textField;
+	private JTextField txtFechaFin;
+	Object[] columnNames = {"Id", "Capacidad", "Descripcion", "Ubicacion"};
+	String[][] datosnuevos = {};
+	private JTable table_1;
+	private JTable table_2;
 	
 	/**
 	 * Launch the application.
@@ -99,153 +104,19 @@ public class Reservar {
 		bares = new ArrayList<Elemento>();
 		estadios = new ArrayList<Elemento>();
 		reservasCliente = new ArrayList<Elemento>();
-		TipoElemento tea = new TipoElemento();
+		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		tiposElementos = new ArrayList<TipoElemento>();
-		tipos = new List<String>() {
-			
-			@Override
-			public <T> T[] toArray(T[] a) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public Object[] toArray() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public List<String> subList(int fromIndex, int toIndex) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public int size() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public String set(int index, String element) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean retainAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean removeAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public String remove(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean remove(Object o) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public ListIterator<String> listIterator(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public ListIterator<String> listIterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public int lastIndexOf(Object o) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public Iterator<String> iterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean isEmpty() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public int indexOf(Object o) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-			
-			@Override
-			public String get(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-			
-			@Override
-			public boolean containsAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean contains(Object o) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void clear() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean addAll(int index, Collection<? extends String> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public boolean addAll(Collection<? extends String> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-			
-			@Override
-			public void add(int index, String element) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public boolean add(String e) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
-		tipos.add("");
+		tipos = new ArrayList<String>();
+		
+		TipoElemento tea = new TipoElemento();
 		tea.setIdTipo(0);
 		tea.setDescTipo("teatro");
-		TipoElemento bar = new TipoElemento("bar");
-		TipoElemento est = new TipoElemento("estadio");
+		TipoElemento bar = new TipoElemento();
+		bar.setIdTipo(1);
+		bar.setDescTipo("bar");
+		TipoElemento est = new TipoElemento();
+		est.setIdTipo(2);
+		est.setDescTipo("estadio");
 		tiposElementos.add(tea);
 		tiposElementos.add(bar);
 		tiposElementos.add(est);
@@ -264,12 +135,8 @@ public class Reservar {
 		for (TipoElemento tipo : tiposElementos) {
 			tipos.add(tipo.getDescTipo());
 		}
-		modeloLista = new SpinnerListModel();
-		modeloLista.setList(tiposElementos);
-		
-		JSpinner spinner = new JSpinner(modeloLista);
-		spinner.setModel(new SpinnerListModel(new String[] {}));
-		//spinner.setModel(modeloLista);
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerListModel(tipos));
 	
 		
 		
@@ -281,13 +148,16 @@ public class Reservar {
 		btnComprar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				int indice = table.getSelectedRow();
 				if(table.getSelectedRowCount()>0){
-				/*//table.convertColumnIndexToModel(table.getSelectedRow())
-				Elemento teleact = new Elemento();
-				teleact = televisores.get(indice);
-				lblResultado.setText("Compro: " + teleact.getMarca() + " " + teleact.getModelo());
-				carrito.add(televisores.get(indice));}*/
+				int indice = table.convertColumnIndexToModel(table.getSelectedRow());
+				Elemento lugarAct = new Elemento();
+				TableModel nuevo = table.getModel();
+				Object id = nuevo.getValueAt(indice, 0);
+				String seleccionado = id.toString();
+				lblResultado.setText(seleccionado);
+				//lugarAct = bares.get(indice);
+				//lblResultado.setText("Reservo: " + lugarAct.getDescripcion() + " " + lugarAct.getUbicacion());
+				//carrito.add(televisores.get(indice));}
 				}
 			}
 		});
@@ -296,43 +166,57 @@ public class Reservar {
 
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				actualizarTabla();
+			String seleccionado = spinner.getValue().toString();
+			lblResultado.setText(seleccionado);
+			
+			actualizarTabla(seleccionado);
 			}
-			private void actualizarTabla(){
-/*				Object[][] datosnuevos = {};
-				tipos = new DefaultTableModel(datosnuevos, columnNames);
-				table.setModel(nuevomodelo);
-				int tam = televisores.size();
-				modelo= new DefaultTableModel(datos,columnNames);
-				table = new JTable(modelo);
-				for (Elemento tel : televisores) {
-					Object[] newRow= {tel.getIdTelevisor(),tel.getMarca(),tel.getModelo(), tel.getDescripcion(), tel.getPrecio()};
-					modelo.addRow(newRow);*/
+			
+			private void actualizarTabla(String sel){
+			while(modelo.getRowCount()>0){
+			modelo.removeRow(0);
 			}
-		});
+				if(sel.equals("bar")){
+					for (Elemento el : bares) {
+					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
+					modelo.addRow(newRow);
+					}
+					table_2.setModel(modelo);
+			}
+				if(sel.equals("estadio")){
+					for (Elemento el : estadios) {
+					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
+					modelo.addRow(newRow);
+					}
+					table_2.setModel(modelo);
+			}
+				if(sel.equals("teatro")){
+					for (Elemento el : teatros) {
+					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
+					modelo.addRow(newRow);
+					}
+					table_2.setModel(modelo);
+			}
+		}});
 		
 		
 		JLabel lblFechaInicio = new JLabel("FechaInicio:");
-		txtPrecio = new JTextField();
-		txtPrecio.setColumns(10);
+		txtFechaInicio = new JTextField();
+		txtFechaInicio.setColumns(10);
 		
 		
 		
 		lblResultado = new JLabel("---------");
 		
-		JScrollPane scrollPane = new JScrollPane();
-		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtFechaFin = new JTextField();
+		txtFechaFin.setColumns(10);
 		
 		JLabel lblFechaFin = new JLabel("Fecha Fin:");
+		
+		JScrollPane scrollPane = new JScrollPane();
 		
 		
 		
@@ -342,35 +226,38 @@ public class Reservar {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(10)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(10)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(27)
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblFechaInicio)
-												.addComponent(lblFechaFin)))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGap(32)
-											.addComponent(lblResultado))))
+									.addGap(13)
+									.addComponent(lblFechaInicio))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addContainerGap()
-									.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)))
-							.addGap(18)
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 579, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(txtFechaInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(23)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(btnBuscar)))
-					.addContainerGap())
+					.addGap(20))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(488, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(33)
+					.addComponent(lblResultado)
+					.addContainerGap(515, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(479, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+					.addGap(29)
+					.addComponent(lblFechaFin)
+					.addContainerGap(505, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -379,26 +266,28 @@ public class Reservar {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnBuscar))
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(59)
 							.addComponent(lblFechaInicio)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(11)
+							.addComponent(txtFechaInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(38)
 							.addComponent(lblFechaFin)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(lblResultado)
-							.addGap(42)
+							.addGap(32)
 							.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-					.addGap(51))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(18)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)))
+					.addGap(46))
 		);
 		
-		//JTable table = new JTable();
-		scrollPane.setViewportView(table);
+		table_2 = new JTable();
+		scrollPane.setViewportView(table_2);
 		frame.getContentPane().setLayout(groupLayout);
 	}
 }

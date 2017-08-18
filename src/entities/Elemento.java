@@ -8,6 +8,8 @@ public class Elemento {
 	private TipoElemento tipo;
 	private static int ult = 0;
 	
+	public Elemento(){}
+	
 	public Elemento(String desc, int cap,String ubi,TipoElemento tip  ){
 		this.setIdElemento();
 		this.setDescripcion(desc);
