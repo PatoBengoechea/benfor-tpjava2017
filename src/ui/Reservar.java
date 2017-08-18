@@ -148,7 +148,7 @@ public class Reservar {
 		btnComprar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(table.getSelectedRowCount()>0){
+				if(table_2.getSelectedRowCount()>0){
 				String fechaini;
 				String fechafin;
 				fechaini = txtFechaInicio.getText();
@@ -158,8 +158,9 @@ public class Reservar {
 				Date datefin;
 				dateini = obtenerFecha(fechaini);
 				datefin = obtenerFecha(fechafin);
-				int indice = table.convertColumnIndexToModel(table.getSelectedRow());
-				TableModel nuevo = table.getModel();
+				int indice = table_2.convertColumnIndexToModel(table_2.getSelectedRow());
+				TableModel nuevo = table_2.getModel();
+				nuevo = table_2.getModel();
 				Object id = nuevo.getValueAt(indice, 0);
 				String seleccionado = id.toString();
 				lblResultado.setText(seleccionado);
