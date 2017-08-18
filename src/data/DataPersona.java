@@ -10,10 +10,10 @@ public class DataPersona {
 	public ArrayList<Persona> getAll(){
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<Persona> personas = new ArrayList<Persona>();
+		ArrayList<Persona> Personas = new ArrayList<Persona>();
 		try {
 			stmt = FactoryConexion.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("select * from persona");
+			rs = stmt.executeQuery("select * from Persona");
 			if(rs!=null){
 				while(rs.next()){
 					Persona p=new Persona();
@@ -22,7 +22,7 @@ public class DataPersona {
 					p.setApellido(rs.getString("apellido"));
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
-					personas.add(p);
+					Personas.add(p);
 				}
 		} 
 		}catch (Exception e) {
@@ -36,7 +36,7 @@ public class DataPersona {
 			
 			e.printStackTrace();
 		}
-	return personas;
+	return Personas;
 	}
 	
 	public Persona getByDni(Persona per){
@@ -45,7 +45,7 @@ public class DataPersona {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select idPersona, nombre, apellido, dni, habilitado from persona where dni=?");
+					"select idPersona, nombre, apellido, dni, habilitado from Persona where dni=?");
 			stmt.setString(1, per.getDni());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -77,7 +77,7 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"insert into persona(dni, nombre, apellido, habilitado) values (?,?,?,?)",
+					"insert into Persona(dni, nombre, apellido, habilitado) values (?,?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
 			stmt.setString(1, p.getDni());
@@ -106,7 +106,7 @@ public class DataPersona {
 		ResultSet rs = null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"delete from persona where id = ?");
+					"delete from Persona where id = ?");
 			stmt.setInt(1, per.getId());
 			rs=stmt.executeQuery();
 			
@@ -128,7 +128,7 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update persona(nombre, apellido, habilitado, usuario, password) values (?,?,?, ?,?) where idPersona = ?");
+					"update Persona(nombre, apellido, habilitado, usuario, password) values (?,?,?, ?,?) where idPersona = ?");
 			stmt.setString(1, per.getNombre());
 			stmt.setString(2, per.getApellido());
 			stmt.setBoolean(3, per.isHabilitado());
@@ -153,7 +153,7 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update persona(habilitado) values (?) where idPersona = ?");
+					"update Persona(habilitado) values (?) where idPersona = ?");
 			stmt.setBoolean(1, false);
 			stmt.setInt(2, per.getIdPersona());
 			stmt.executeUpdate();

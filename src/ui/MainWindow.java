@@ -55,7 +55,7 @@ public class MainWindow extends JFrame {
 		mntmAbmcpersona.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ABMCPersonaDesktop pd= new ABMCPersonaDesktop();
+				LoginUsuario pd= new LoginUsuario();
 				frame.getContentPane().add(pd);
 				pd.setVisible(true);
 			}

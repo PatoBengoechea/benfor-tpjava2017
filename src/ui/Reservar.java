@@ -1,6 +1,7 @@
 package ui;
 
 import entities.Elemento;
+import java.util.Date;
 import entities.TipoElemento;
 import entities.Persona;
 import javax.swing.JSpinner;
@@ -41,10 +42,12 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import javax.swing.JSpinner;
+import javax.swing.JComboBox;
 
 public class Reservar {
 
@@ -58,6 +61,7 @@ public class Reservar {
 	public ArrayList<Elemento> teatros;
 	public ArrayList<Elemento> bares;
 	public ArrayList<Elemento> estadios;
+	public ArrayList<Elemento> elementos;
 	public ArrayList<Elemento> reservasCliente;
 	public ArrayList<TipoElemento> tiposElementos;
 	public List<String> tipos;
@@ -112,6 +116,7 @@ public class Reservar {
 		tea.setIdTipo(0);
 		tea.setDescTipo("teatro");
 		TipoElemento bar = new TipoElemento();
+		elementos = new ArrayList<Elemento>();
 		bar.setIdTipo(1);
 		bar.setDescTipo("bar");
 		TipoElemento est = new TipoElemento();
@@ -126,52 +131,68 @@ public class Reservar {
 		Elemento b2 = new Elemento("Fellini",150,"Corrientes 1400",bar);
 		Elemento e1 = new Elemento("Estadio Marcelo Bielsa",5000,"27 de Febrero 2400",est);
 		Elemento e2 = new Elemento("Estadio Gigante de Arroyito",4000,"Costanera 800",est);
-		teatros.add(t1);
-		teatros.add(t2);
-		bares.add(b1);
-		bares.add(b2);
-		estadios.add(e1);
-		estadios.add(e2);
+		elementos.add(t1);
+		elementos.add(t2);
+		elementos.add(b1);
+		elementos.add(b2);
+		elementos.add(e1);
+		elementos.add(e2);
 		for (TipoElemento tipo : tiposElementos) {
 			tipos.add(tipo.getDescTipo());
 		}
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerListModel(tipos));
 	
-		
-		
-		
-		
-		
 
-		JButton btnComprar = new JButton("Comprar");
+		JButton btnComprar = new JButton("RESERVAR");
 		btnComprar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(table.getSelectedRowCount()>0){
-				int indice = table.convertColumnIndexToModel(table.getSelectedRow());
+				String fechaini;
+				String fechafin;
+				fechaini = txtFechaInicio.getText();
+				fechafin = txtFechaFin.getText();
 				Elemento lugarAct = new Elemento();
+				Date dateini;
+				Date datefin;
+				dateini = obtenerFecha(fechaini);
+				datefin = obtenerFecha(fechafin);
+				int indice = table.convertColumnIndexToModel(table.getSelectedRow());
 				TableModel nuevo = table.getModel();
 				Object id = nuevo.getValueAt(indice, 0);
 				String seleccionado = id.toString();
 				lblResultado.setText(seleccionado);
-				//lugarAct = bares.get(indice);
-				//lblResultado.setText("Reservo: " + lugarAct.getDescripcion() + " " + lugarAct.getUbicacion());
-				//carrito.add(televisores.get(indice));}
+				validarFecha(lugarAct, dateini, datefin);
 				}
+			}
+
+			private void validarFecha(Elemento lugarAct, Date dateini, Date datefin) {
+				
+				
+			}
+
+			private Date obtenerFecha(String fec) {
+				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+				Date fecha = null;
+				try {
+				fecha = formatoDelTexto.parse(fec);
+				} catch (ParseException ex) {
+				ex.printStackTrace();
+				}
+			return fecha;
 			}
 		});
 
 				
 
 		
-		JButton btnBuscar = new JButton("Buscar");
+		JButton btnBuscar = new JButton("Buscar Recintos");
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 			String seleccionado = spinner.getValue().toString();
 			lblResultado.setText(seleccionado);
-			
 			actualizarTabla(seleccionado);
 			}
 			
@@ -180,24 +201,27 @@ public class Reservar {
 			modelo.removeRow(0);
 			}
 				if(sel.equals("bar")){
-					for (Elemento el : bares) {
+					for (Elemento el : elementos) {
+					if (el.getTipo().getDescTipo().equals("bar")){
 					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
 					modelo.addRow(newRow);
-					}
+					}}
 					table_2.setModel(modelo);
 			}
 				if(sel.equals("estadio")){
-					for (Elemento el : estadios) {
+					for (Elemento el : elementos) {
+						if (el.getTipo().getDescTipo().equals("estadio")){
 					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
 					modelo.addRow(newRow);
-					}
+					}}
 					table_2.setModel(modelo);
 			}
 				if(sel.equals("teatro")){
-					for (Elemento el : teatros) {
+					for (Elemento el : elementos) {
+					if (el.getTipo().getDescTipo().equals("teatro")){
 					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
 					modelo.addRow(newRow);
-					}
+					}}
 					table_2.setModel(modelo);
 			}
 		}});
@@ -206,6 +230,8 @@ public class Reservar {
 		JLabel lblFechaInicio = new JLabel("FechaInicio:");
 		txtFechaInicio = new JTextField();
 		txtFechaInicio.setColumns(10);
+		
+
 		
 		
 		
@@ -222,42 +248,37 @@ public class Reservar {
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
+			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(13)
-									.addComponent(lblFechaInicio))
+									.addContainerGap()
+									.addComponent(txtFechaInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(txtFechaInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(23)
+									.addGap(23)
+									.addComponent(lblFechaInicio)))
+							.addGap(25)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(btnBuscar)))
-					.addGap(20))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(488, Short.MAX_VALUE))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(33)
-					.addComponent(lblResultado)
-					.addContainerGap(515, Short.MAX_VALUE))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(479, Short.MAX_VALUE))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(29)
-					.addComponent(lblFechaFin)
-					.addContainerGap(505, Short.MAX_VALUE))
+							.addComponent(btnBuscar))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(33)
+							.addComponent(lblResultado))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(29)
+							.addComponent(lblFechaFin)))
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
