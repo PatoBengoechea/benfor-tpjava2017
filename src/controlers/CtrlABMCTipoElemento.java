@@ -16,7 +16,7 @@ public class CtrlABMCTipoElemento {
 		datatipo.add(tipoe);
 	}
 	
-	public ArrayList<TipoElemento> buscarTipoElemento(TipoElemento tipoe){
+	public TipoElemento buscarTipoElemento(TipoElemento tipoe){
 		return datatipo.getById(tipoe);
 	}
 	

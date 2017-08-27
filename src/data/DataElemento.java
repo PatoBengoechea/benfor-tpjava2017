@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.security.KeyStore.ProtectionParameter;
 
 public class DataElemento {
+	
+	public void add(Elemento elem){
+		//completar
+	}
 
 	public ArrayList<Elemento> getAll(){
 		Statement stmt = null;

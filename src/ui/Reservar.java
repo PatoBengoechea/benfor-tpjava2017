@@ -103,7 +103,7 @@ public class Reservar {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 600, 400);
 		frame.setVisible(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		teatros = new ArrayList<Elemento>();
 		bares = new ArrayList<Elemento>();
 		estadios = new ArrayList<Elemento>();
@@ -192,6 +192,7 @@ public class Reservar {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+			buscar();
 			String seleccionado = spinner.getValue().toString();
 			lblResultado.setText(seleccionado);
 			actualizarTabla(seleccionado);
@@ -311,5 +312,10 @@ public class Reservar {
 		table_2 = new JTable();
 		scrollPane.setViewportView(table_2);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+
+	protected void buscar() {
+		// TODO Auto-generated method stub
+		
 	}
 }

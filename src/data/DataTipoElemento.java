@@ -38,8 +38,8 @@ public class DataTipoElemento {
 	return tipoelementos;
 	}
 
-	public ArrayList<TipoElemento> getById(TipoElemento tipoe){
-		ArrayList<TipoElemento> tipoelementos = new ArrayList<TipoElemento>();
+	public TipoElemento getById(TipoElemento tipoe){
+		TipoElemento tipoelemento = new TipoElemento();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
@@ -65,7 +65,7 @@ public class DataTipoElemento {
 			e.printStackTrace();
 		}
 		
-		return tipoelementos;
+		return tipoelemento;
 	}
 	
 	public void add(TipoElemento tipoe){

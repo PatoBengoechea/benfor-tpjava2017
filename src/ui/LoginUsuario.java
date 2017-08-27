@@ -72,10 +72,7 @@ public class LoginUsuario extends JFrame {
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Reservar vc = new Reservar();
-				LoginUsuario vlogin = new LoginUsuario();
-				vc.main(null);
-				vlogin.setVisible(false);			
+				ingresar();			
 			}
 
 
@@ -109,13 +106,25 @@ public class LoginUsuario extends JFrame {
 		btnRegistrarse.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				nuevoUser vc = new nuevoUser();
-				LoginUsuario vlogin = new LoginUsuario();
-				vc.main(null);
-				vlogin.setVisible(false);
-			}
-		});
+				registrar();
+
+			}});
 		btnRegistrarse.setBounds(46, 204, 89, 23);
 		panel.add(btnRegistrarse);
+	}
+
+	protected void registrar() {
+		ABMCPersonaDesktop vc = new ABMCPersonaDesktop();
+		LoginUsuario vlogin = new LoginUsuario();
+		vc.main(null);
+		vlogin.setVisible(false);
+		
+	}
+
+	protected void ingresar() {
+		MainWindowUser vc = new MainWindowUser();
+		LoginUsuario vlogin = new LoginUsuario();
+		vc.main(null);
+		vlogin.setVisible(false);
 	}
 }

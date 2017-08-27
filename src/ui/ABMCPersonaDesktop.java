@@ -19,8 +19,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
+import javax.swing.JComboBox;
 
-public class ABMCPersonaDesktop extends JInternalFrame {
+public class ABMCPersonaDesktop extends JFrame {
 	
 	private CtrlABMCPersona ctrl = new CtrlABMCPersona();
 	
@@ -30,6 +31,8 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 	private JTextField txtDni;
 	private JTextField txtId;
 	private JCheckBox chkHabilitado;
+	private JTextField txtNomUser;
+	private JTextField txtPass;
 
 	/**
 	 * Launch the application.
@@ -55,6 +58,7 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		
 		JPanel panel = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
+		panel.setVisible(false);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -98,35 +102,52 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		
 		JButton btnAgregar = new JButton("Agregar");
+		
+		txtNomUser = new JTextField();
+		txtNomUser.setColumns(10);
+		
+		JLabel label = new JLabel("Nombre Usuario:");
+		
+		JLabel label_1 = new JLabel("Password:");
+		
+		txtPass = new JTextField();
+		txtPass.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(59)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(chkHabilitado)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(31)
-							.addComponent(btnModificar)
-							.addGap(37)
-							.addComponent(btnBuscar)
-							.addGap(27)
-							.addComponent(btnAgregar))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(39)
-							.addComponent(chkHabilitado))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(59)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblApellido)
-								.addComponent(lblDni)
 								.addComponent(lblId)
-								.addComponent(lblNombre))
+								.addComponent(lblNombre)
+								.addComponent(lblApellido)
+								.addComponent(lblDni))
 							.addGap(30)
 							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(45, Short.MAX_VALUE))
+								.addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtPass, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(btnModificar)
+									.addGap(27)
+									.addComponent(btnBuscar))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addComponent(label, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(txtNomUser, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addComponent(btnAgregar)))
+					.addContainerGap(112, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -139,21 +160,29 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNombre)
 						.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblApellido)
 						.addComponent(txtApellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(36)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDni)
 						.addComponent(txtDni, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(23)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label)
+						.addComponent(txtNomUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label_1)
+						.addComponent(txtPass, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
 					.addComponent(chkHabilitado)
-					.addGap(49)
+					.addPreferredGap(ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnModificar)
-						.addComponent(btnBuscar)
-						.addComponent(btnAgregar))
+						.addComponent(btnAgregar)
+						.addComponent(btnBuscar))
 					.addGap(65))
 		);
 		panel.setLayout(gl_panel);
@@ -196,14 +225,13 @@ public class ABMCPersonaDesktop extends JInternalFrame {
 		this.txtNombre.setText(p.getNombre());
 		this.txtApellido.setText(p.getApellido());
 		this.chkHabilitado.setSelected(p.isHabilitado());
+		this.txtNomUser.setText(p.getUsuario());
+		this.txtPass.setText(p.getPassword());
 	}
 	
 	private Persona mapearDeForm(){
-		Persona p=new Persona();
-		p.setDni(this.txtDni.getText());
-		p.setNombre(this.txtNombre.getText());
-		p.setApellido(this.txtApellido.getText());
-		p.setHabilitado(this.chkHabilitado.isSelected());
+		Persona p = new Persona(txtNombre.getText(), txtApellido.getText(), txtDni.getText(),
+				txtNomUser.getText(),txtPass.getText());
 		return p;
 	}
 }

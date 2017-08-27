@@ -7,6 +7,12 @@ public class Persona {
 	private String dni;
 	private boolean habilitado;
 	private int idPersona;
+	private String usuario;
+	private String password;
+	public static int ultnro;
+	//private String tipoAcceso;
+	
+
 	public boolean isHabilitado() {
 		return habilitado;
 	}
@@ -14,9 +20,7 @@ public class Persona {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-	private String usuario;
-	private String password;
-	public static int ultnro;
+	
 	
 	public Persona() {
 		

@@ -29,6 +29,7 @@ public class Elemento {
 		this.setCapacidad(cap);
 		this.setUbicacion(ubi);
 		this.setTipo(tip);
+		this.reservas = new ArrayList<Reserva>();
 		}
 	
 	public TipoElemento getTipo() {
