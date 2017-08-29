@@ -1,9 +1,11 @@
 package ui;
 
 import entities.Elemento;
-import java.util.Date;
+import java.sql.Date;
+
 import entities.TipoElemento;
 import entities.Persona;
+import entities.Reserva;
 import javax.swing.JSpinner;
 import java.awt.EventQueue;
 import java.awt.Label;
@@ -58,11 +60,9 @@ public class Reservar {
 	private DefaultTableModel nuevomodelo;
 	private JScrollPane scrollLista;
 	private SpinnerListModel modeloLista;
-	public ArrayList<Elemento> teatros;
-	public ArrayList<Elemento> bares;
-	public ArrayList<Elemento> estadios;
 	public ArrayList<Elemento> elementos;
 	public ArrayList<Elemento> reservasCliente;
+	public ArrayList<Reserva> reservas;
 	public ArrayList<TipoElemento> tiposElementos;
 	public List<String> tipos;
 	private JLabel lblResultado;
@@ -104,24 +104,26 @@ public class Reservar {
 		frame.setBounds(100, 100, 600, 400);
 		frame.setVisible(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		teatros = new ArrayList<Elemento>();
-		bares = new ArrayList<Elemento>();
-		estadios = new ArrayList<Elemento>();
 		reservasCliente = new ArrayList<Elemento>();
+		reservas = new ArrayList<Reserva>();
 		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		tiposElementos = new ArrayList<TipoElemento>();
 		tipos = new ArrayList<String>();
-		
+		//carga de datos array list momentaneos
 		TipoElemento tea = new TipoElemento();
 		tea.setIdTipo(0);
 		tea.setDescTipo("teatro");
+		tea.setCantdiasMax(4);
 		TipoElemento bar = new TipoElemento();
+		
 		elementos = new ArrayList<Elemento>();
 		bar.setIdTipo(1);
 		bar.setDescTipo("bar");
+		bar.setCantdiasMax(4);
 		TipoElemento est = new TipoElemento();
 		est.setIdTipo(2);
 		est.setDescTipo("estadio");
+		est.setCantdiasMax(6);
 		tiposElementos.add(tea);
 		tiposElementos.add(bar);
 		tiposElementos.add(est);
@@ -137,9 +139,14 @@ public class Reservar {
 		elementos.add(b2);
 		elementos.add(e1);
 		elementos.add(e2);
+		Date datei = new Date(2017,12,30);
+		Date datef = new Date(2017,12,31);
+		Reserva nuevaR = new Reserva(t1, datei , datef);
+		reservas.add(nuevaR);
 		for (TipoElemento tipo : tiposElementos) {
 			tipos.add(tipo.getDescTipo());
 		}
+		//Termina la carga
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerListModel(tipos));
 	
@@ -149,13 +156,13 @@ public class Reservar {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if(table_2.getSelectedRowCount()>0){
-				String fechaini;
-				String fechafin;
+				String fechaini = null;
+				String fechafin = null;
 				fechaini = txtFechaInicio.getText();
 				fechafin = txtFechaFin.getText();
 				Elemento lugarAct = new Elemento();
-				Date dateini;
-				Date datefin;
+				Date dateini = null;
+				Date datefin = null;
 				dateini = obtenerFecha(fechaini);
 				datefin = obtenerFecha(fechafin);
 				int indice = table_2.convertColumnIndexToModel(table_2.getSelectedRow());
@@ -164,14 +171,13 @@ public class Reservar {
 				Object id = nuevo.getValueAt(indice, 0);
 				String seleccionado = id.toString();
 				lblResultado.setText(seleccionado);
-				validarFecha(lugarAct, dateini, datefin);
+				Reserva reservaAct = new Reserva(lugarAct,dateini,datefin);
+				if(validarFecha(reservaAct)){
+					lblResultado.setText("fecha disponible y reserva realizada");
+				};
 				}
 			}
 
-			private void validarFecha(Elemento lugarAct, Date dateini, Date datefin) {
-				
-				
-			}
 
 			private Date obtenerFecha(String fec) {
 				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
@@ -202,30 +208,12 @@ public class Reservar {
 			while(modelo.getRowCount()>0){
 			modelo.removeRow(0);
 			}
-				if(sel.equals("bar")){
-					for (Elemento el : elementos) {
-					if (el.getTipo().getDescTipo().equals("bar")){
-					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
+			for (Elemento elem : elementos) {
+					if (elem.getTipo().getDescTipo().equals(sel)){
+					Object[] newRow= {elem.getIdElemento(),elem.getCapacidad(),elem.getDescripcion(), elem.getUbicacion()};
 					modelo.addRow(newRow);
 					}}
 					table_2.setModel(modelo);
-			}
-				if(sel.equals("estadio")){
-					for (Elemento el : elementos) {
-						if (el.getTipo().getDescTipo().equals("estadio")){
-					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
-					modelo.addRow(newRow);
-					}}
-					table_2.setModel(modelo);
-			}
-				if(sel.equals("teatro")){
-					for (Elemento el : elementos) {
-					if (el.getTipo().getDescTipo().equals("teatro")){
-					Object[] newRow= {el.getIdElemento(),el.getCapacidad(),el.getDescripcion(), el.getUbicacion()};
-					modelo.addRow(newRow);
-					}}
-					table_2.setModel(modelo);
-			}
 		}});
 		
 		
@@ -312,6 +300,22 @@ public class Reservar {
 		table_2 = new JTable();
 		scrollPane.setViewportView(table_2);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+
+	protected boolean validarFecha(Reserva reservaAct) {
+		Boolean estado = true;
+		for (Reserva res : reservas) {
+			if(reservaAct.getElemento().equals(res.getElemento())){
+				if((res.getFechaInicio().before(reservaAct.getFechaFin()))
+						|| (res.getFechaFin().after(reservaAct.getFechaInicio())))
+				{
+					estado = false;
+					return estado;
+				}
+			
+			}
+		}
+		return estado;
 	}
 
 	protected void buscar() {

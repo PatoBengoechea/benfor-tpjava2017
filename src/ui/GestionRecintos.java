@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import entities.*;
 import controlers.CtrlABMCElemento;
 import controlers.CtrlABMCTipoElemento;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionRecintos {
 
@@ -25,6 +27,9 @@ public class GestionRecintos {
 	private JTextField txtUbicacion;
 	private JTextField txtDesc;
 	private JTextField txtCap;
+	private JLabel lblResultado;
+	private JComboBox<String> comboBox;
+	private TipoElemento tipo;
 	private CtrlABMCElemento ctrlE;
 	private CtrlABMCTipoElemento ctrlT;
 	public ArrayList<TipoElemento> tiposElementos;
@@ -50,6 +55,7 @@ public class GestionRecintos {
 	 */
 	public GestionRecintos() {
 		initialize();
+		carga();
 	}
 
 	/**
@@ -61,7 +67,7 @@ public class GestionRecintos {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		ctrlE = new CtrlABMCElemento();
 		ctrlT = new CtrlABMCTipoElemento();
-		tiposElementos.addAll(ctrlT.getAll());
+		//tiposElementos.addAll(ctrlT.getAll());
 		
 		JLabel lblNewLabel = new JLabel("Id Recinto");
 		
@@ -83,7 +89,7 @@ public class GestionRecintos {
 		txtCap = new JTextField();
 		txtCap.setColumns(10);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		
 		JLabel lblNewLabel_4 = new JLabel("Tipo Recinto");
 		
@@ -94,6 +100,8 @@ public class GestionRecintos {
 				agregar();
 			}
 		});
+		
+		lblResultado = new JLabel("-   -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -109,15 +117,17 @@ public class GestionRecintos {
 								.addComponent(lblNewLabel_4))
 							.addGap(62)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtCap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(txtUbicacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+									.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addComponent(btnAgregar))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(148)
-							.addComponent(btnAgregar)))
-					.addContainerGap(164, Short.MAX_VALUE))
+							.addContainerGap()
+							.addComponent(lblResultado, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -142,9 +152,11 @@ public class GestionRecintos {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_4))
-					.addGap(29)
+					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+					.addComponent(lblResultado)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnAgregar)
-					.addContainerGap(30, Short.MAX_VALUE))
+					.addGap(19))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
@@ -156,7 +168,24 @@ public class GestionRecintos {
 		int cap = Integer.parseInt(this.txtCap.getText());
 		String ubi = null;
 		ubi = this.txtUbicacion.getText();
+		String sel = null;
+		sel = comboBox.getSelectedItem().toString();
+		for (TipoElemento tipoElemento : tiposElementos) {
+			if(tipoElemento.getDescTipo().equals(sel)){
+				tipo = tipoElemento;
+			}
+		}
 		Elemento elem = new Elemento(desc,cap,ubi,tipo);
-		ctrlE.Add(elem);
+		this.lblResultado.setText("Agrego: " + desc + "  Capacidad: " + cap + "  Ubicacion: " + ubi + "  Tipo: " + tipo.getDescTipo());
+		//ctrlE.Add(elem);
 							}
-}
+	private void carga() {
+		tiposElementos = new ArrayList<TipoElemento>();
+		tipo = new TipoElemento("Estadio", 10);
+		tiposElementos.add(tipo);
+		for (TipoElemento tipoElemento : tiposElementos) {
+			comboBox.addItem(tipoElemento.getDescTipo());
+		}
+	}
+	}
+

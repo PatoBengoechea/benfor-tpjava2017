@@ -58,7 +58,8 @@ public class ABMCPersonaDesktop extends JFrame {
 		
 		JPanel panel = new JPanel();
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		panel.setVisible(false);
+		panel.setVisible(true);
+		
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()

@@ -8,6 +8,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import controlers.CtrlABMCTipoElemento;
 import entities.TipoElemento;
@@ -17,12 +18,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JSpinner;
 
 public class GestionTipos {
 
 	private JFrame frame;
 	private JTextField txtDesc;
+	private JSpinner spinner;
+	private SpinnerNumberModel modelos;
 	CtrlABMCTipoElemento ctrltipo;
+	private JLabel lblResultado;
 
 	/**
 	 * Launch the application.
@@ -68,12 +73,15 @@ public class GestionTipos {
 				agregar();
 			}
 		});
-		btnAgregar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		
 		JButton btnEliminarTipo = new JButton("Eliminar");
+		
+		spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(0), null, null, new Integer(1)));
+		
+		JLabel lblCantidadDias = new JLabel("Cantidad Dias Maximos Reserva");
+		
+		lblResultado = new JLabel("-   -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -81,23 +89,36 @@ public class GestionTipos {
 					.addGap(65)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblNombreNuevoTipo)
+							.addComponent(lblCantidadDias)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(txtDesc, GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE))
+							.addComponent(spinner, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblNombreNuevoTipo, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+							.addGap(27)
+							.addComponent(txtDesc, GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(btnEliminarTipo)
-							.addPreferredGap(ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
-							.addComponent(btnAgregar)))
+							.addPreferredGap(ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+							.addComponent(btnAgregar))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addComponent(lblResultado, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)
+							.addGap(39)))
 					.addGap(77))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(108, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+					.addContainerGap(71, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNombreNuevoTipo)
 						.addComponent(txtDesc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(83)
+					.addGap(24)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCantidadDias)
+						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(43)
+					.addComponent(lblResultado)
+					.addGap(13)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnEliminarTipo)
 						.addComponent(btnAgregar))
@@ -108,13 +129,16 @@ public class GestionTipos {
 
 	protected void agregar() {
 		String desc = null;
-		TipoElemento tiponuevo = new TipoElemento(txtDesc.getText());
-		ctrltipo.Add(tiponuevo);		
+		desc = txtDesc.getText();
+		int diasMax = 0;
+		diasMax = Integer.parseInt((spinner.getModel().getValue().toString()));
+		TipoElemento tiponuevo = new TipoElemento(desc,diasMax);
+		this.lblResultado.setText("Agrego: " + desc + " Dias Max:  " + diasMax);
+		//ctrltipo.Add(tiponuevo);		
 	}
 	
 	protected void eliminar(){
 		
 		//no hace nada
 	}
-
 }

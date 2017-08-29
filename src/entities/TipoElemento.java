@@ -3,13 +3,23 @@ package entities;
 public class TipoElemento {
 	private int idTipo;
 	private String descTipo;
+	private int cantdiasMax;
 	private static int ult;
 	
+	public int getCantdiasMax() {
+		return cantdiasMax;
+	}
+
+	public void setCantdiasMax(int cantdiasMax) {
+		this.cantdiasMax = cantdiasMax;
+	}
+
 	public TipoElemento(){}
 	
-	public TipoElemento(String dTipo){
+	public TipoElemento(String dTipo, int cantD){
 		this.setIdTipo(this.getUlt());
 		this.setDescTipo(dTipo);
+		this.setCantdiasMax(cantD);
 		actualizarUltimo();
 	}
 
