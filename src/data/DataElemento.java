@@ -1,5 +1,4 @@
 package data;
-import entities.Persona;
 import entities.Reserva;
 import entities.Elemento;
 import java.sql.*;
@@ -8,8 +7,35 @@ import java.security.KeyStore.ProtectionParameter;
 
 public class DataElemento {
 	
-	public void add(Elemento elem){
-		//completar
+	public void add(Elemento el){
+		PreparedStatement stmt=null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"insert into Elemento(idElemento, ubicacion, descripcion, capacidad, idTipo) values (?,?,?,?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS
+					);
+			stmt.setInt(1, el.getIdElemento());
+			stmt.setString(2, el.getUbicacion());
+			stmt.setString(3, el.getDescripcion());
+			stmt.setInt(4, el.getCapacidad());
+			stmt.setInt(5, el.getTipo().getIdTipo());
+			stmt.executeUpdate();
+			keyResultSet=stmt.getGeneratedKeys();
+			if(keyResultSet!=null && keyResultSet.next()){
+				el.setIdElemento(keyResultSet.getInt(1));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			if(keyResultSet!=null)keyResultSet.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ArrayList<Elemento> getAll(){
@@ -41,7 +67,7 @@ public class DataElemento {
 			return elementos;
 		}
 	
-	public ArrayList<Reserva> getReservas(int idElemento){
+	/*public ArrayList<Reserva> getReservas(int idElemento){
 	PreparedStatement stmt=null;
 	ResultSet rs = null;
 	ArrayList<Reserva> reservas = new ArrayList<Reserva>();
@@ -71,7 +97,8 @@ public class DataElemento {
 				}
 		return reservas;
 
-	}
+	}*/
+	
 	public Elemento getById(Elemento ele){
 		Elemento t = null;
 		PreparedStatement stmt=null;

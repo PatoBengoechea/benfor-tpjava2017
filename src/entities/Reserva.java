@@ -6,8 +6,12 @@ public class Reserva {
 	int idReserva;
 	Date fechaInicio;
 	Date fechaFin;
-	int idElemento;
+	Elemento elemento;
+	Persona persona;
 	
+	public Persona getPersona() {
+		return persona;
+	}
 	public int getIdReserva() {
 		return idReserva;
 	}
@@ -26,10 +30,13 @@ public class Reserva {
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	public int getIdElemento() {
-		return idElemento;
+	public Elemento getElemento() {
+		return elemento;
 	}
-	public void setIdElemento(int idElemento) {
-		this.idElemento = idElemento;
+	public void setElemento(Elemento elemento) {
+		this.elemento = elemento;
+	}
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 }

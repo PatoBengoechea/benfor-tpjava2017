@@ -170,4 +170,39 @@ public class DataPersona {
 	
 	}
 	
+	
+	public Persona getById(Persona per){
+		Persona p=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select idPersona, nombre, apellido, dni, habilitado from Persona where id=?");
+			stmt.setInt(1, per.getIdPersona());
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					p=new Persona();
+					p.setIdPersona(rs.getInt("idPersona"));
+					p.setNombre(rs.getString("nombre"));
+					p.setApellido(rs.getString("apellido"));
+					p.setDni(rs.getString("dni"));
+					p.setHabilitado(rs.getBoolean("habilitado"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			if(rs!=null)rs.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
+	
+	
 }
