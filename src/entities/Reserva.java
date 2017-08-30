@@ -16,7 +16,7 @@ public class Reserva {
 		this.fechaFin = datef;
 	}
 
-	public void Reserva(){}
+	public Reserva(){}
 	
 	
 	public Persona getPersona() {
