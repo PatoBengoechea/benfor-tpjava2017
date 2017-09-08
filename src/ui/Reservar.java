@@ -1,7 +1,7 @@
 package ui;
 
 import entities.Elemento;
-import java.util.Date;
+import java.sql.Date;
 
 import entities.TipoElemento;
 import entities.Persona;
@@ -87,7 +87,7 @@ public class Reservar {
 				}
 			}
 		});
-}
+	}
 
 	/**
 	 * Create the application.
@@ -139,8 +139,9 @@ public class Reservar {
 		elementos.add(b2);
 		elementos.add(e1);
 		elementos.add(e2);
-		Date datei = new Date(2017,12,30);
-		Date datef = new Date(2017,12,31);
+		Date datei =  Date.valueOf("2017-12-30");
+		
+		Date datef = Date.valueOf("2017-12-31");
 		Reserva nuevaR = new Reserva(t1, datei , datef);
 		reservas.add(nuevaR);
 		for (TipoElemento tipo : tiposElementos) {
@@ -152,6 +153,10 @@ public class Reservar {
 	
 
 		JButton btnComprar = new JButton("RESERVAR");
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnComprar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -180,13 +185,9 @@ public class Reservar {
 
 
 			private Date obtenerFecha(String fec) {
-				SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
+				//SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
 				Date fecha = null;
-				try {
-				fecha = formatoDelTexto.parse(fec);
-				} catch (ParseException ex) {
-				ex.printStackTrace();
-				}
+				fecha =Date.valueOf(fec);
 			return fecha;
 			}
 		});

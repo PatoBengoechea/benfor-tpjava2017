@@ -27,8 +27,7 @@ public class CtrlABMCPersona {
 	}
 	
 	public void updatePersona(Persona per){
-		datap.delete(per);
-		datap.add(per);
+		datap.update(per);
 	}
 	public Persona buscarPersona(Persona per){
 		return datap.getByDni(per);

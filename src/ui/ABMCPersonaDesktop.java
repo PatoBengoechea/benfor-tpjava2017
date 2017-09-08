@@ -219,7 +219,9 @@ public class ABMCPersonaDesktop extends JFrame {
 	}
 	protected void buscarClick()
 	{
-		ctrl.buscarPersona(this.mapearDeForm());
+		Persona p = new Persona();
+		p = ctrl.buscarPersona(this.mapearDeForm());
+		this.mapearAForm(p);
 	}
 	private void mapearAForm(Persona p){
 		this.txtDni.setText(p.getDni());
@@ -228,6 +230,8 @@ public class ABMCPersonaDesktop extends JFrame {
 		this.chkHabilitado.setSelected(p.isHabilitado());
 		this.txtNomUser.setText(p.getUsuario());
 		this.txtPass.setText(p.getPassword());
+		this.txtId.setText(String.valueOf(p.getIdPersona()));
+	
 	}
 	
 	private Persona mapearDeForm(){

@@ -9,7 +9,6 @@ public class Persona {
 	private int idPersona;
 	private String usuario;
 	private String password;
-	public static int ultnro;
 	//private String tipoAcceso;
 	
 
@@ -33,7 +32,6 @@ public class Persona {
 		this.habilitado = true;
 		this.usuario = usu;
 		this.password = contra;
-		this.idPersona = ultnro++;
 	}
 	
 	public String getNombre() {
