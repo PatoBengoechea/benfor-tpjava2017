@@ -153,5 +153,27 @@ import entities.TipoElemento;
 							}
 					return susReservas;
 				}
+			
+			public void delete(Reserva r) {
+				PreparedStatement stmt=null;
+				ResultSet rs = null;
+				try {
+					stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+							"delete from Reserva where id = ?");
+					stmt.setInt(1, r.getIdReserva() );
+					rs=stmt.executeQuery();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} 
+				
+				try {
+					if(rs!=null)rs.close();
+					if(stmt!=null)stmt.close();
+					FactoryConexion.getInstancia().releaseConn();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		
 }

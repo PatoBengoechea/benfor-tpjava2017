@@ -14,12 +14,17 @@ public class CtrlABMCReserva {
 	}
 	
 	
-	public void AddReserva(Reserva r){
+	public void addReserva(Reserva r){
 		datar.add(r);
 	}
 	
-	public ArrayList<Reserva> GetAll()
+	public ArrayList<Reserva> getAll()
 	{
 		return datar.getAll();
+	}
+	
+	public void delete(Reserva r)
+	{
+		datar.delete(r);
 	}
 }
