@@ -1,7 +1,7 @@
 package ui;
 
 import entities.Elemento;
-import java.sql.Date;
+import java.util.Date;
 
 import entities.TipoElemento;
 import entities.Persona;
@@ -87,7 +87,7 @@ public class Reservar {
 				}
 			}
 		});
-	}
+}
 
 	/**
 	 * Create the application.

@@ -23,8 +23,6 @@ public class MainWindowUser extends JFrame {
 
 	private JFrame frame;
 
-	
-
 	/**
 	 * Launch the application.
 	 */
