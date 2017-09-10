@@ -8,22 +8,27 @@ import data.DataElemento;
 
 
 public class CtrlABMCElemento {
-	private DataElemento datatipo;
+	private DataElemento de;
 	public CtrlABMCElemento() {
-		datatipo = new DataElemento();
+		de = new DataElemento();
 	}
 	
 	public void Add(Elemento elemento) {
-		datatipo.add(elemento);
+		de.add(elemento);
 	}
 	
 	public Elemento buscarElemento(Elemento elemento){
-		return datatipo.getById(elemento);
+		return de.getById(elemento);
 	}
 	
 	public ArrayList<Elemento> getAll(){
-		return datatipo.getAll();
+		return de.getAll();
 	}
+	
+	public ArrayList<Elemento> getByTipo(int idTipo){
+		return de.getByTipo(idTipo);
+	}
+			
 }
 	
 	

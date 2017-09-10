@@ -1,9 +1,10 @@
 package data;
-import entities.Reserva;
+
+import entities.TipoElemento;
 import entities.Elemento;
 import java.sql.*;
 import java.util.ArrayList;
-import java.security.KeyStore.ProtectionParameter;
+
 
 public class DataElemento {
 	
@@ -130,5 +131,48 @@ public class DataElemento {
 		}
 		
 		return t;
+	}
+	
+	public ArrayList<Elemento> getByTipo(int selec){
+		Elemento e;
+		TipoElemento te;
+		DataTipoElemento dte;
+		ArrayList<Elemento> es = new ArrayList<Elemento>();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select e.idElemento, e.ubicacion, e.descripcion, e.capacidad, te.idTipo from Elemento e leftjoin TipoElemento te where te.idTipo = ?");
+			stmt.setInt(1, selec);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					e=new Elemento();
+					te = new TipoElemento();
+					dte = new DataTipoElemento();
+					e.setIdElemento(rs.getInt("e.idElemento"));
+					e.setUbicacion(rs.getString("e.ubicacion"));
+					e.setDescripcion(rs.getString("e.descripcion"));
+					e.setCapacidad(rs.getInt("e.capacidad"));
+					te.setIdTipo(rs.getInt("te.idTipo"));
+					te = dte.getById(te);
+					e.setTipo(te);
+					es.add(e);
+					
+					
+			}
+			
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		try {
+			if(rs!=null)rs.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return es;
 	}
 }

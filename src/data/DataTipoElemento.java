@@ -38,14 +38,14 @@ public class DataTipoElemento {
 	return tipoelementos;
 	}
 
-	public TipoElemento getById(TipoElemento tipoe){
+	public TipoElemento getById(TipoElemento t){
 		TipoElemento tipoelemento = new TipoElemento();
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					"select idTipo, descripcion from TipoElemento where idElemento=?");
-			stmt.setInt(1, tipoe.getIdTipo());
+			stmt.setInt(1, t.getIdTipo());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
 					TipoElemento te = new TipoElemento();

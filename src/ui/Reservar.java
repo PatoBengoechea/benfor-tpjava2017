@@ -1,6 +1,7 @@
 package ui;
 
 import entities.Elemento;
+
 import java.sql.Date;
 
 import entities.TipoElemento;
@@ -50,6 +51,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
+import controlers.CtrlABMCElemento;
 
 public class Reservar {
 
@@ -72,6 +74,7 @@ public class Reservar {
 	String[][] datosnuevos = {};
 	private JTable table_1;
 	private JTable table_2;
+	private CtrlABMCElemento ctrl;
 	
 	/**
 	 * Launch the application.
@@ -94,6 +97,8 @@ public class Reservar {
 	 */
 	public Reservar() {
 		initialize();
+		ctrl = new CtrlABMCElemento();
+		
 	}
 
 	/**
@@ -199,12 +204,24 @@ public class Reservar {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+//			String seleccionado = spinner.getValue().toString();	
+//			this.buscarRecintos(seleccionado);
 			buscar();
 			String seleccionado = spinner.getValue().toString();
 			lblResultado.setText(seleccionado);
 			actualizarTabla(seleccionado);
 			}
 			
+			private ArrayList<Elemento> buscarRecintos(String seleccionado) {
+				int idTipo = 0;
+				if(seleccionado == "Teatro") idTipo = 1;
+				if(seleccionado == "Bar") idTipo = 2;
+				if(seleccionado == "Estadio") idTipo = 3;
+				return ctrl.getByTipo(idTipo);
+		
+				
+			}
+
 			private void actualizarTabla(String sel){
 			while(modelo.getRowCount()>0){
 			modelo.removeRow(0);
