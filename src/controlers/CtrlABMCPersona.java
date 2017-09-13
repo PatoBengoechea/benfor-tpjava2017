@@ -12,14 +12,19 @@ public class CtrlABMCPersona {
 	}
 	
 	public Persona buscarUsuario(Persona usu) {
-		/*for (Persona per : personas) {
-			Persona pers = new Persona();
-			if((usu.getUsuario().equals("lio")) && (usu.getContraseña().equals("anto"))){
-				pers.setNombre("lionel");
-				return pers;
+		ArrayList<Persona> personas = new ArrayList<Persona>();
+		personas = datap.getAll();
+		Persona pers = new Persona();
+		pers.setUsuario("vacio");
+		pers.setPassword("vacio");
+		for (Persona per : personas) {
+			if((per.getUsuario().equals(usu.getUsuario())) 
+					&& (per.getPassword().equals(usu.getPassword())))
+			{
+				pers = per;
 			}
-		pers = null;*/
-		return null;
+		}
+		return pers;
 	}
 
 	public void addPersona(Persona per){
@@ -31,6 +36,10 @@ public class CtrlABMCPersona {
 	}
 	public Persona buscarPersona(Persona per){
 		return datap.getByDni(per);
+	}
+
+	public void validoUser() {
+		
 	}
 	
 }

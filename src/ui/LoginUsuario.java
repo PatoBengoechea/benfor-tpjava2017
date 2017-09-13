@@ -27,7 +27,7 @@ public class LoginUsuario extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtUsu;
 	private JTextField txtPass;
-	private JLabel lblEncontro;
+	private JLabel lblEncontro_1;
 	public CtrlABMCPersona ctrl;
 	
 
@@ -98,8 +98,8 @@ public class LoginUsuario extends JFrame {
 		lblContrasea.setBounds(46, 116, 76, 16);
 		panel.add(lblContrasea);
 		
-		JLabel lblEncontro_1 = new JLabel("--");
-		lblEncontro_1.setBounds(173, 178, 61, 16);
+		lblEncontro_1 = new JLabel("--");
+		lblEncontro_1.setBounds(88, 178, 239, 16);
 		panel.add(lblEncontro_1);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
@@ -122,6 +122,20 @@ public class LoginUsuario extends JFrame {
 	}
 
 	protected void ingresar() {
+		String user = txtUsu.getText();
+		String pass = txtPass.getText();
+		Persona usu = new Persona(user, pass);
+		Persona usuAct = new Persona();
+		usuAct = ctrl.buscarUsuario(usu);
+		if(usuAct.estaVacio()){
+			lblEncontro_1.setText("Usuario y PassWord incorrectos");
+		}
+		else{
+		abrirMenu();
+		}
+	}
+
+	private void abrirMenu() {
 		MainWindowUser vc = new MainWindowUser();
 		LoginUsuario vlogin = new LoginUsuario();
 		vc.main(null);

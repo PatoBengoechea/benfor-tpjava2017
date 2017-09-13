@@ -52,6 +52,7 @@ import javax.swing.JTable;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import controlers.CtrlABMCElemento;
+import controlers.CtrlABMCTipoElemento;
 
 public class Reservar {
 
@@ -66,11 +67,13 @@ public class Reservar {
 	public ArrayList<Elemento> reservasCliente;
 	public ArrayList<Reserva> reservas;
 	public ArrayList<TipoElemento> tiposElementos;
+	public CtrlABMCTipoElemento ctrlTipoElemento;
+	CtrlABMCElemento ctrlElemento;
 	public List<String> tipos;
 	private JLabel lblResultado;
 	private JTable table;
 	private JTextField txtFechaFin;
-	Object[] columnNames = {"Id", "Capacidad", "Descripcion", "Ubicacion"};
+	Object[] columnNames = {"Id", "Capacidad", "Descripcion", "ubicacion","IdTipo"};
 	String[][] datosnuevos = {};
 	private JTable table_1;
 	private JTable table_2;
@@ -97,8 +100,6 @@ public class Reservar {
 	 */
 	public Reservar() {
 		initialize();
-		ctrl = new CtrlABMCElemento();
-		
 	}
 
 	/**
@@ -113,46 +114,20 @@ public class Reservar {
 		reservas = new ArrayList<Reserva>();
 		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		tiposElementos = new ArrayList<TipoElemento>();
-		tipos = new ArrayList<String>();
-		//carga de datos array list momentaneos
-		TipoElemento tea = new TipoElemento();
-		tea.setIdTipo(0);
-		tea.setDescTipo("teatro");
-		tea.setCantdiasMax(4);
-		TipoElemento bar = new TipoElemento();
-		
 		elementos = new ArrayList<Elemento>();
-		bar.setIdTipo(1);
-		bar.setDescTipo("bar");
-		bar.setCantdiasMax(4);
-		TipoElemento est = new TipoElemento();
-		est.setIdTipo(2);
-		est.setDescTipo("estadio");
-		est.setCantdiasMax(6);
-		tiposElementos.add(tea);
-		tiposElementos.add(bar);
-		tiposElementos.add(est);
-		Elemento t1 = new Elemento("Teatro Gran Rex",2000,"Mitre 200",tea);
-		Elemento t2 = new Elemento("Teatro Opera",3000,"Mitre 900",tea);
-		Elemento b1 = new Elemento("Paso Sport",200,"Paraguay 1300",bar);
-		Elemento b2 = new Elemento("Fellini",150,"Corrientes 1400",bar);
-		Elemento e1 = new Elemento("Estadio Marcelo Bielsa",5000,"27 de Febrero 2400",est);
-		Elemento e2 = new Elemento("Estadio Gigante de Arroyito",4000,"Costanera 800",est);
-		elementos.add(t1);
-		elementos.add(t2);
-		elementos.add(b1);
-		elementos.add(b2);
-		elementos.add(e1);
-		elementos.add(e2);
-		Date datei =  Date.valueOf("2017-12-30");
+		tipos = new ArrayList<String>();
+		ctrlTipoElemento = new CtrlABMCTipoElemento();
 		
-		Date datef = Date.valueOf("2017-12-31");
-		Reserva nuevaR = new Reserva(t1, datei , datef);
-		reservas.add(nuevaR);
+		
+		tiposElementos = ctrlTipoElemento.getAll();
+		
+//		Date datei =  Date.valueOf("2017-12-30");
+//		Date datef = Date.valueOf("2017-12-31");
+//		Reserva nuevaR = new Reserva(t1, datei , datef);
+//		reservas.add(nuevaR);
 		for (TipoElemento tipo : tiposElementos) {
 			tipos.add(tipo.getDescTipo());
 		}
-		//Termina la carga
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerListModel(tipos));
 	
@@ -204,34 +179,35 @@ public class Reservar {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-//			String seleccionado = spinner.getValue().toString();	
-//			this.buscarRecintos(seleccionado);
-			buscar();
 			String seleccionado = spinner.getValue().toString();
 			lblResultado.setText(seleccionado);
 			actualizarTabla(seleccionado);
 			}
 			
-			private ArrayList<Elemento> buscarRecintos(String seleccionado) {
-				int idTipo = 0;
-				if(seleccionado == "Teatro") idTipo = 1;
-				if(seleccionado == "Bar") idTipo = 2;
-				if(seleccionado == "Estadio") idTipo = 3;
-				return ctrl.getByTipo(idTipo);
-		
-				
-			}
 
 			private void actualizarTabla(String sel){
+			ctrlElemento = new CtrlABMCElemento();
+			elementos = ctrlElemento.getAll();
 			while(modelo.getRowCount()>0){
 			modelo.removeRow(0);
 			}
+			if(elementos.isEmpty()){
+				lblResultado.setText("No hay elementos");
+			}
+			else{
 			for (Elemento elem : elementos) {
-					if (elem.getTipo().getDescTipo().equals(sel)){
-					Object[] newRow= {elem.getIdElemento(),elem.getCapacidad(),elem.getDescripcion(), elem.getUbicacion()};
+					String h1 = "";
+					String h2 = "";
+					h1 = elem.getTipo().getDescTipo();
+					lblResultado.setText(h1);
+					h2 = sel;
+					if (h1.equalsIgnoreCase(h2)){
+					Object[] newRow= {elem.getIdElemento(),elem.getCapacidad(),elem.getDescripcion(), elem.getUbicacion(), elem.getTipo().getIdTipo()};
 					modelo.addRow(newRow);
-					}}
+					}
+			}
 					table_2.setModel(modelo);
+			}
 		}});
 		
 		
@@ -334,10 +310,5 @@ public class Reservar {
 			}
 		}
 		return estado;
-	}
-
-	protected void buscar() {
-		// TODO Auto-generated method stub
-		
 	}
 }

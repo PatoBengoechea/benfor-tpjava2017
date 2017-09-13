@@ -52,7 +52,7 @@ public class DataElemento {
 					t.setIdElemento(rs.getInt("idElemento"));
 					t.setDescripcion(rs.getString("descripcion"));
 					t.setCapacidad(rs.getInt("capacidad"));
-					t.setTipo(rs.getInt("idTipoElemento"));
+					t.setTipo(rs.getInt("idTipo"));
 					elementos.add(t);
 					}	
 				}
@@ -102,77 +102,77 @@ public class DataElemento {
 	
 	public Elemento getById(Elemento ele){
 		Elemento t = null;
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement
-			("select * from Elementos where idElemento = ?");
-			stmt.setInt(1, ele.getIdElemento());
-			rs = stmt.executeQuery();
-			if(rs!=null && rs.next()){
-					t = new Elemento();
-					t.setIdElemento(rs.getInt("idElemento"));
-					t.setDescripcion(rs.getString("descripcion"));
-					t.setCapacidad(rs.getInt("capacidad"));
-					t.setTipo(rs.getInt("idTipoElemento"));
-					}
-			
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			if(rs!=null)rs.close();
-			if(stmt!=null)stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+//		PreparedStatement stmt=null;
+//		ResultSet rs=null;
+//		try {
+//			stmt=FactoryConexion.getInstancia().getConn().prepareStatement
+//			("select * from Elementos where idElemento = ?");
+//			stmt.setInt(1, ele.getIdElemento());
+//			rs = stmt.executeQuery();
+//			if(rs!=null && rs.next()){
+//					t = new Elemento();
+//					t.setIdElemento(rs.getInt("idElemento"));
+//					t.setDescripcion(rs.getString("descripcion"));
+//					t.setCapacidad(rs.getInt("capacidad"));
+//					t.setTipo(rs.getInt("idTipo"));
+//					}
+//			
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		try {
+//			if(rs!=null)rs.close();
+//			if(stmt!=null)stmt.close();
+//			FactoryConexion.getInstancia().releaseConn();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
 		return t;
 	}
 	
 	public ArrayList<Elemento> getByTipo(int selec){
-		Elemento e;
-		TipoElemento te;
-		DataTipoElemento dte;
+//		Elemento e;
+//		TipoElemento te;
+//		DataTipoElemento dte;
 		ArrayList<Elemento> es = new ArrayList<Elemento>();
-		PreparedStatement stmt=null;
-		ResultSet rs=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select e.idElemento, e.ubicacion, e.descripcion, e.capacidad, te.idTipo from Elemento e leftjoin TipoElemento te where te.idTipo = ?");
-			stmt.setInt(1, selec);
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()){
-					e=new Elemento();
-					te = new TipoElemento();
-					dte = new DataTipoElemento();
-					e.setIdElemento(rs.getInt("e.idElemento"));
-					e.setUbicacion(rs.getString("e.ubicacion"));
-					e.setDescripcion(rs.getString("e.descripcion"));
-					e.setCapacidad(rs.getInt("e.capacidad"));
-					te.setIdTipo(rs.getInt("te.idTipo"));
-					te = dte.getById(te);
-					e.setTipo(te);
-					es.add(e);
-					
-					
-			}
-			
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		
-		try {
-			if(rs!=null)rs.close();
-			if(stmt!=null)stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		
+//		PreparedStatement stmt=null;
+//		ResultSet rs=null;
+//		try {
+//			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+//					"select e.idElemento, e.ubicacion, e.descripcion, e.capacidad, te.idTipo from Elemento e leftjoin TipoElemento te where te.idTipo = ?");
+//			stmt.setInt(1, selec);
+//			rs=stmt.executeQuery();
+//			if(rs!=null && rs.next()){
+//					e=new Elemento();
+//					te = new TipoElemento();
+//					dte = new DataTipoElemento();
+//					e.setIdElemento(rs.getInt("e.idElemento"));
+//					e.setUbicacion(rs.getString("e.ubicacion"));
+//					e.setDescripcion(rs.getString("e.descripcion"));
+//					e.setCapacidad(rs.getInt("e.capacidad"));
+//					te.setIdTipo(rs.getInt("te.idTipo"));
+//					te = dte.getById(te);
+//					e.setTipo(te);
+//					es.add(e);
+//					
+//					
+//			}
+//			
+//		} catch (SQLException ex) {
+//			ex.printStackTrace();
+//		}
+//		
+//		try {
+//			if(rs!=null)rs.close();
+//			if(stmt!=null)stmt.close();
+//			FactoryConexion.getInstancia().releaseConn();
+//		} catch (SQLException ex) {
+//			ex.printStackTrace();
+//		}
+//		
 		return es;
 	}
 }

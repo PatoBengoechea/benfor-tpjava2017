@@ -19,10 +19,29 @@ public class Persona {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
+
+	
+	public boolean estaVacio()
+		{
+		if(this.getUsuario().equals("vacio") &&
+		this.getPassword().equals("vacio")){
+			return true;
+		}
+	return false;		
+	}
 	
 	
 	public Persona() {
 		
+	}
+	
+	public Persona(String usu, String contra) {
+		this.nombre = "";
+		this.apellido = "";
+		this.dni = "";
+		this.habilitado = true;
+		this.usuario = usu;
+		this.password = contra;
 	}
 	
 	public Persona(String nom, String ape, String dni, String usu, String contra) {

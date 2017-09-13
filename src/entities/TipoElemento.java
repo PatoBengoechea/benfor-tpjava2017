@@ -16,6 +16,10 @@ public class TipoElemento {
 
 	public TipoElemento(){}
 	
+	public TipoElemento(int idtipo){
+		this.idTipo = idtipo;
+	}
+	
 	public TipoElemento(String dTipo, int cantD){
 		this.setIdTipo(this.getUlt());
 		this.setDescTipo(dTipo);

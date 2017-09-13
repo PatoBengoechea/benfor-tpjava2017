@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import controlers.CtrlABMCTipoElemento;
 
 import entities.Reserva;
 
@@ -10,6 +11,7 @@ public class Elemento {
 	private String descripcion;
 	private int capacidad;
 	private TipoElemento tipo;
+	CtrlABMCTipoElemento ctrl;
 	private ArrayList<Reserva> reservas;
 	private static int ult = 0;
 	
@@ -21,7 +23,9 @@ public class Elemento {
 		this.reservas = reservas;
 	}
 
-	public Elemento(){}
+	public Elemento(){
+		ctrl = new CtrlABMCTipoElemento();
+	}
 	
 	public Elemento(String desc, int cap,String ubi,TipoElemento tip  ){
 		this.setIdElemento();
@@ -39,7 +43,10 @@ public class Elemento {
 		this.tipo = tipo;
 	}
 	public void setTipo(int idtipo) {
-		//this.tipo = tipos;
+		TipoElemento tipoe = new TipoElemento(idtipo);
+		TipoElemento tiponuevo = new TipoElemento();
+		tiponuevo = ctrl.buscarTipoElemento(tipoe);
+		this.tipo = tiponuevo;
 	}
 	public int getIdElemento() {
 		return idElemento;
