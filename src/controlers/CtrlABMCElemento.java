@@ -25,8 +25,8 @@ public class CtrlABMCElemento {
 		return de.getAll();
 	}
 	
-	public ArrayList<Elemento> getByTipo(int idTipo){
-		return de.getByTipo(idTipo);
+	public ArrayList<Elemento> getByTipo(TipoElemento te){
+		return de.getByTipo(te);
 	}
 			
 }

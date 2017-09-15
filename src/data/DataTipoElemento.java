@@ -66,31 +66,31 @@ public class DataTipoElemento {
 	}
 	
 	public void add(TipoElemento tipoe){
-//		PreparedStatement stmt=null;
-//		ResultSet keyResultSet=null;
-//		try {
-//			stmt=FactoryConexion.getInstancia().getConn()
-//					.prepareStatement(
-//					"insert into TipoElemento(idTipo, descripcion) values (?,?)",
-//					PreparedStatement.RETURN_GENERATED_KEYS
-//					);
-//			stmt.setInt(1, tipoe.getIdTipo());
-//			stmt.setString(2, tipoe.getDescTipo());
-//			stmt.executeUpdate();
-//			keyResultSet=stmt.getGeneratedKeys();
-//			if(keyResultSet!=null && keyResultSet.next()){
-//				tipoe.setIdTipo(keyResultSet.getInt(1));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		try {
-//			if(keyResultSet!=null)keyResultSet.close();
-//			if(stmt!=null)stmt.close();
-//			FactoryConexion.getInstancia().releaseConn();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
+		PreparedStatement stmt=null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"insert into TipoElemento(idTipo, descripcion) values (?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS
+					);
+			stmt.setInt(1, tipoe.getIdTipo());
+			stmt.setString(2, tipoe.getDescTipo());
+			stmt.executeUpdate();
+			keyResultSet=stmt.getGeneratedKeys();
+			if(keyResultSet!=null && keyResultSet.next()){
+				tipoe.setIdTipo(keyResultSet.getInt(1));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if(keyResultSet!=null)keyResultSet.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

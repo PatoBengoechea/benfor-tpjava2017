@@ -53,6 +53,7 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import controlers.CtrlABMCElemento;
 import controlers.CtrlABMCTipoElemento;
+import javax.swing.ComboBoxModel;
 
 public class Reservar {
 
@@ -62,14 +63,13 @@ public class Reservar {
 	private DefaultTableModel modelo;
 	private DefaultTableModel nuevomodelo;
 	private JScrollPane scrollLista;
-	private SpinnerListModel modeloLista;
 	public ArrayList<Elemento> elementos;
 	public ArrayList<Elemento> reservasCliente;
 	public ArrayList<Reserva> reservas;
 	public ArrayList<TipoElemento> tiposElementos;
 	public CtrlABMCTipoElemento ctrlTipoElemento;
 	CtrlABMCElemento ctrlElemento;
-	public List<String> tipos;
+	public ArrayList<String> tipos;
 	private JLabel lblResultado;
 	private JTable table;
 	private JTextField txtFechaFin;
@@ -78,6 +78,10 @@ public class Reservar {
 	private JTable table_1;
 	private JTable table_2;
 	private CtrlABMCElemento ctrl;
+	private JComboBox<String> cmbTipos;
+	
+	
+	
 	
 	/**
 	 * Launch the application.
@@ -117,6 +121,8 @@ public class Reservar {
 		elementos = new ArrayList<Elemento>();
 		tipos = new ArrayList<String>();
 		ctrlTipoElemento = new CtrlABMCTipoElemento();
+		cmbTipos = new JComboBox<String>();
+		
 		
 		
 		tiposElementos = ctrlTipoElemento.getAll();
@@ -126,10 +132,11 @@ public class Reservar {
 //		Reserva nuevaR = new Reserva(t1, datei , datef);
 //		reservas.add(nuevaR);
 		for (TipoElemento tipo : tiposElementos) {
-			tipos.add(tipo.getDescTipo());
+			//tipos.add(tipo.getDescTipo());
+			cmbTipos.addItem(tipo.getDescTipo());
 		}
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerListModel(tipos));
+		
+		
 	
 
 		JButton btnComprar = new JButton("RESERVAR");
@@ -154,8 +161,11 @@ public class Reservar {
 				TableModel nuevo = table_2.getModel();
 				nuevo = table_2.getModel();
 				Object id = nuevo.getValueAt(indice, 0);
+				
 				String seleccionado = id.toString();
 				lblResultado.setText(seleccionado);
+				lugarAct.setIdElemento(seleccionado);
+				ctrlElemento.buscarElemento(lugarAct);
 				Reserva reservaAct = new Reserva(lugarAct,dateini,datefin);
 				if(validarFecha(reservaAct)){
 					lblResultado.setText("fecha disponible y reserva realizada");
@@ -179,7 +189,7 @@ public class Reservar {
 		btnBuscar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-			String seleccionado = spinner.getValue().toString();
+			String seleccionado = cmbTipos.getSelectedItem().toString();
 			lblResultado.setText(seleccionado);
 			actualizarTabla(seleccionado);
 			}
@@ -199,7 +209,6 @@ public class Reservar {
 					String h1 = "";
 					String h2 = "";
 					h1 = elem.getTipo().getDescTipo();
-					lblResultado.setText(h1);
 					h2 = sel;
 					if (h1.equalsIgnoreCase(h2)){
 					Object[] newRow= {elem.getIdElemento(),elem.getCapacidad(),elem.getDescripcion(), elem.getUbicacion(), elem.getTipo().getIdTipo()};
@@ -230,6 +239,7 @@ public class Reservar {
 		
 		
 		
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -246,9 +256,9 @@ public class Reservar {
 							.addGap(25)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
+							.addGap(54)
+							.addComponent(cmbTipos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(137)
 							.addComponent(btnBuscar))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
@@ -262,15 +272,15 @@ public class Reservar {
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
 							.addComponent(lblFechaFin)))
-					.addContainerGap(20, Short.MAX_VALUE))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnBuscar))
+						.addComponent(btnBuscar)
+						.addComponent(cmbTipos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(59)

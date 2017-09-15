@@ -122,11 +122,16 @@ public class LoginUsuario extends JFrame {
 	}
 
 	protected void ingresar() {
-		String user = txtUsu.getText();
-		String pass = txtPass.getText();
-		Persona usu = new Persona(user, pass);
+		Persona p = new Persona();
+		p.setUsuario(txtUsu.getText());
+		p.setPassword(txtPass.getText());
+//		String user = "";
+//		String pass = "";
+//		user = txtUsu.getText();
+//		pass = txtPass.getText();
+//		Persona usu = new Persona(user, pass);
 		Persona usuAct = new Persona();
-		usuAct = ctrl.buscarUsuario(usu);
+		usuAct = ctrl.buscarUsuario(p);
 		if(usuAct.estaVacio()){
 			lblEncontro_1.setText("Usuario y PassWord incorrectos");
 		}

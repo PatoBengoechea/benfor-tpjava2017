@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Component;
+
 public class TipoElemento {
 	private int idTipo;
 	private String descTipo;
@@ -21,14 +23,14 @@ public class TipoElemento {
 	}
 	
 	public TipoElemento(String dTipo, int cantD){
-		this.setIdTipo(this.getUlt());
+		this.setIdTipo(getUlt());
 		this.setDescTipo(dTipo);
 		this.setCantdiasMax(cantD);
 		actualizarUltimo();
 	}
 
 	private void actualizarUltimo() {
-		this.setUlt(this.getUlt()+1);
+		setUlt(getUlt()+1);
 	}
 
 	public int getIdTipo() {

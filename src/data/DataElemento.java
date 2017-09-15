@@ -133,7 +133,7 @@ public class DataElemento {
 		return t;
 	}
 	
-	public ArrayList<Elemento> getByTipo(int selec){
+	public ArrayList<Elemento> getByTipo(TipoElemento tipo){
 //		Elemento e;
 //		TipoElemento te;
 //		DataTipoElemento dte;
@@ -143,7 +143,7 @@ public class DataElemento {
 //		try {
 //			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 //					"select e.idElemento, e.ubicacion, e.descripcion, e.capacidad, te.idTipo from Elemento e leftjoin TipoElemento te where te.idTipo = ?");
-//			stmt.setInt(1, selec);
+//			stmt.setInt(1, tipo.getIdTipo());
 //			rs=stmt.executeQuery();
 //			if(rs!=null && rs.next()){
 //					e=new Elemento();

@@ -21,6 +21,8 @@ public class DataPersona {
 					p.setApellido(rs.getString("apellido"));
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
+					p.setUsuario(rs.getString("usuario"));
+					p.setPassword(rs.getString("contraseña"));
 					Personas.add(p);
 				}
 		} 

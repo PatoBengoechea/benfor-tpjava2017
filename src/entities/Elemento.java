@@ -58,6 +58,9 @@ public class Elemento {
 	public void setIdElemento(int i) {
 		this.idElemento = i;
 	}
+	public void setIdElemento(String i) {
+		this.idElemento = Integer.parseInt(i);
+	}
 	public String getUbicacion() {
 		return ubicacion;
 	}
