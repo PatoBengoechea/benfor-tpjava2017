@@ -74,6 +74,11 @@ public class Persona {
 	public int getIdPersona() {
 		return idPersona;
 	}
+	
+	public String getIdPersonaString() {
+		return String.valueOf(idPersona);
+	}
+	
 	public void setIdPersona(int id) {
 		this.idPersona = id;
 	}

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entities.Persona;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JDesktopPane;
@@ -22,16 +25,18 @@ public class MainWindowUser extends JFrame {
 	
 
 	private JFrame frame;
+	static private Persona usuActual;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(Persona usuAct) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					MainWindowUser frame = new MainWindowUser();
 					frame.setVisible(true);
+					usuActual = usuAct;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -125,8 +130,8 @@ public class MainWindowUser extends JFrame {
 
 	protected void abrirReserbas() {
 		MainWindowUser vc = new MainWindowUser();
-		Reservar reser = new Reservar();
-		reser.main(null);
+		ABMCReservas reser = new ABMCReservas();
+		reser.main(usuActual);
 		vc.setVisible(false);
 	}
 

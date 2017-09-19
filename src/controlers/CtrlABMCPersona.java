@@ -38,7 +38,15 @@ public class CtrlABMCPersona {
 		return datap.getByDni(per);
 	}
 
-	public void validoUser() {
+	public Persona buscarPersonaID(Persona per){
+		return datap.getById(per);
+	}
+	public ArrayList<Persona> getAll()
+	{
+		return datap.getAll();
+	}
+	
+ 	public void validoUser() {
 		
 	}
 	

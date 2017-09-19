@@ -136,14 +136,14 @@ public class LoginUsuario extends JFrame {
 			lblEncontro_1.setText("Usuario y PassWord incorrectos");
 		}
 		else{
-		abrirMenu();
+		abrirMenu(usuAct);
 		}
 	}
 
-	private void abrirMenu() {
+	private void abrirMenu(Persona usuAct) {
 		MainWindowUser vc = new MainWindowUser();
 		LoginUsuario vlogin = new LoginUsuario();
-		vc.main(null);
+		vc.main(usuAct);
 		vlogin.setVisible(false);
 	}
 }

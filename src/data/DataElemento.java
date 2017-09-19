@@ -102,34 +102,35 @@ public class DataElemento {
 	
 	public Elemento getById(Elemento ele){
 		Elemento t = null;
-//		PreparedStatement stmt=null;
-//		ResultSet rs=null;
-//		try {
-//			stmt=FactoryConexion.getInstancia().getConn().prepareStatement
-//			("select * from Elementos where idElemento = ?");
-//			stmt.setInt(1, ele.getIdElemento());
-//			rs = stmt.executeQuery();
-//			if(rs!=null && rs.next()){
-//					t = new Elemento();
-//					t.setIdElemento(rs.getInt("idElemento"));
-//					t.setDescripcion(rs.getString("descripcion"));
-//					t.setCapacidad(rs.getInt("capacidad"));
-//					t.setTipo(rs.getInt("idTipo"));
-//					}
-//			
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		try {
-//			if(rs!=null)rs.close();
-//			if(stmt!=null)stmt.close();
-//			FactoryConexion.getInstancia().releaseConn();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement
+			("select idElemento, descripcion, ubicacion, capacidad, idTipo from Elementos where idElemento = ?");
+			stmt.setInt(1, ele.getIdElemento());
+			rs = stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					t = new Elemento();
+					t.setIdElemento(rs.getInt("idElemento"));
+					t.setDescripcion(rs.getString("descripcion"));
+					t.setUbicacion(rs.getString("ubicacion"));
+					t.setCapacidad(rs.getInt("capacidad"));
+					t.setTipo(rs.getInt("idTipo"));
+					}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			if(rs!=null)rs.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return t;
 	}
 	

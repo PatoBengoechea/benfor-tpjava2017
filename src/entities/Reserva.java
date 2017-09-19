@@ -1,6 +1,9 @@
 package entities;
 
 import java.sql.Date;
+import java.util.ArrayList;
+
+import controlers.*;
 
 
 public class Reserva {
@@ -9,6 +12,8 @@ public class Reserva {
 	Date fechaFin;
 	Elemento elemento;
 	Persona persona;
+	private CtrlABMCElemento ctrlElemento;
+	private CtrlABMCPersona ctrlPersona;
 	
 	public Reserva(Elemento t1, Date datei, Date datef) {
 		this.elemento = t1;
@@ -43,10 +48,22 @@ public class Reserva {
 	public Elemento getElemento() {
 		return elemento;
 	}
-	public void setElemento(Elemento elemento) {
-		this.elemento = elemento;
+//	public void setElemento(Elemento elemento) {
+//		this.elemento = elemento;
+//	}
+//	public void setPersona(Persona persona) {
+//		this.persona = persona;
+//	}
+	
+	public void setElemento(int id) {
+		Elemento elemento = new Elemento();
+		elemento.setIdElemento(id);
+		this.elemento = ctrlElemento.buscarElemento(elemento);
 	}
-	public void setPersona(Persona persona) {
-		this.persona = persona;
+	
+	public void setPersona(int id) {
+		Persona persona = new Persona();
+		persona.setIdPersona(id);
+		this.persona = ctrlPersona.buscarPersonaID(persona);
 	}
 }
