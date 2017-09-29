@@ -130,8 +130,8 @@ public class MainWindowUser extends JFrame {
 
 	protected void abrirReserbas() {
 		MainWindowUser vc = new MainWindowUser();
-		ABMCReservas reser = new ABMCReservas();
-		reser.main(usuActual);
+	//	ABMCReservas reser = new ABMCReservas();
+		ABMCReservas.main(usuActual);
 		vc.setVisible(false);
 	}
 

@@ -29,6 +29,7 @@ public class LoginUsuario extends JFrame {
 	private JTextField txtPass;
 	private JLabel lblEncontro_1;
 	public CtrlABMCPersona ctrl;
+	static private Persona usuarioAct;
 	
 
 	/**
@@ -130,20 +131,19 @@ public class LoginUsuario extends JFrame {
 //		user = txtUsu.getText();
 //		pass = txtPass.getText();
 //		Persona usu = new Persona(user, pass);
-		Persona usuAct = new Persona();
-		usuAct = ctrl.buscarUsuario(p);
-		if(usuAct.estaVacio()){
+		
+		usuarioAct = ctrl.buscarUsuario(p);
+		if(usuarioAct.estaVacio()){
 			lblEncontro_1.setText("Usuario y PassWord incorrectos");
 		}
 		else{
-		abrirMenu(usuAct);
+		abrirMenu(usuarioAct);
 		}
 	}
 
-	private void abrirMenu(Persona usuAct) {
-		MainWindowUser vc = new MainWindowUser();
+	private void abrirMenu(Persona usuarioAct) {
 		LoginUsuario vlogin = new LoginUsuario();
-		vc.main(usuAct);
+		MainWindowUser.main(usuarioAct);
 		vlogin.setVisible(false);
 	}
 }

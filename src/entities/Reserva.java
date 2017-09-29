@@ -58,12 +58,14 @@ public class Reserva {
 	public void setElemento(int id) {
 		Elemento elemento = new Elemento();
 		elemento.setIdElemento(id);
+		ctrlElemento = new CtrlABMCElemento();
 		this.elemento = ctrlElemento.buscarElemento(elemento);
 	}
 	
 	public void setPersona(int id) {
 		Persona persona = new Persona();
 		persona.setIdPersona(id);
+		ctrlPersona=new CtrlABMCPersona();
 		this.persona = ctrlPersona.buscarPersonaID(persona);
 	}
 }

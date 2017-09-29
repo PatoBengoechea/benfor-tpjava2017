@@ -48,9 +48,10 @@ public class ABMCReservas {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					usuAct = new Persona();
+					usuAct = usuActual;
 					ABMCReservas window = new ABMCReservas();
 					window.frame.setVisible(true);
-					usuAct = usuActual;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -74,8 +75,8 @@ public class ABMCReservas {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		table = new JTable();
 		ctrlR = new CtrlABMCReserva();
+		lblResultado = new JLabel("----");
 		reservasCliente = new ArrayList<Reserva>();
-		
 		actualizarTabla();
 		
 		
@@ -96,7 +97,7 @@ public class ABMCReservas {
 		JButton btnNewButton_2 = new JButton("Eliminar");
 		
 		
-		lblResultado = new JLabel("----");
+		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -141,11 +142,10 @@ public class ABMCReservas {
 		while(modelo.getRowCount()>0){
 			modelo.removeRow(0);}
 			if(reservasCliente.isEmpty()){
-				//lblResultado.setText("No hay elementos");
+				lblResultado.setText("No hay elementos");
 			}
 			else{
 			for (Reserva res : reservasCliente) {
-					
 					if (usuAct.equals(res.getPersona()))
 					{
 					Object[] newRow= {res.getIdReserva(),res.getFechaInicio(),res.getFechaFin(), res.getElemento().getDescripcion(), res.getPersona().getIdPersona()};

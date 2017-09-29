@@ -50,6 +50,7 @@ public class DataElemento {
 				while(rs.next()){
 					Elemento t = new Elemento();
 					t.setIdElemento(rs.getInt("idElemento"));
+					t.setUbicacion(rs.getString("ubicacion"));
 					t.setDescripcion(rs.getString("descripcion"));
 					t.setCapacidad(rs.getInt("capacidad"));
 					t.setTipo(rs.getInt("idTipo"));
@@ -106,7 +107,7 @@ public class DataElemento {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement
-			("select idElemento, descripcion, ubicacion, capacidad, idTipo from Elementos where idElemento = ?");
+			("select idElemento, descripcion, ubicacion, capacidad, idTipo from Elemento where idElemento = ?");
 			stmt.setInt(1, ele.getIdElemento());
 			rs = stmt.executeQuery();
 			if(rs!=null && rs.next()){
