@@ -12,7 +12,7 @@ public class DataPersona {
 		ArrayList<Persona> Personas = new ArrayList<Persona>();
 		try {
 			stmt = FactoryConexion.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("select idPersona, nombre, apellido, dni, habilitado, usuario, contraseña from persona");
+			rs = stmt.executeQuery("select * from persona");
 			if(rs!=null){
 				while(rs.next()){
 					Persona p=new Persona();
@@ -22,7 +22,7 @@ public class DataPersona {
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.setUsuario(rs.getString("usuario"));
-					p.setPassword(rs.getString("contraseña"));
+					p.setPassword(rs.getString("contraseÃ±a"));
 					Personas.add(p);
 				}
 		} 
@@ -46,7 +46,7 @@ public class DataPersona {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select idPersona, nombre, apellido, dni, habilitado, usuario, contraseña from persona where dni=?");
+					"select idPersona, nombre, apellido, dni, habilitado, usuario, contraseï¿½a from persona where dni=?");
 			stmt.setString(1, per.getDni());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -57,7 +57,7 @@ public class DataPersona {
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.setUsuario(rs.getString("usuario"));
-					p.setPassword(rs.getString("contraseña"));
+					p.setPassword(rs.getString("contraseï¿½a"));
 					
 			}
 			
@@ -82,7 +82,7 @@ public class DataPersona {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select idPersona, nombre, apellido, dni, habilitado, usuario, contraseña from persona where idPersona = ? ");
+					"select idPersona, nombre, apellido, dni, habilitado, usuario, contraseï¿½a from persona where idPersona = ? ");
 			stmt.setInt(1, per.getIdPersona());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -93,7 +93,7 @@ public class DataPersona {
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.setUsuario(rs.getString("usuario"));
-					p.setPassword(rs.getString("contraseña"));
+					p.setPassword(rs.getString("contraseï¿½a"));
 					return p;
 			}
 			
@@ -121,7 +121,7 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"insert into Persona(dni, nombre, apellido, habilitado, usuario, contraseña) values (?,?,?,?, ?, ?)",
+					"insert into Persona(dni, nombre, apellido, habilitado, usuario, contraseï¿½a) values (?,?,?,?, ?, ?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
 			stmt.setString(1, p.getDni());

@@ -19,14 +19,14 @@ import entities.TipoElemento;
 			try {
 				stmt=FactoryConexion.getInstancia().getConn()
 						.prepareStatement(
-						"insert into Reserva(idReserva, idPersona, fechaInicio, fechaFin, idElemento) values (?,?,?,?,?)",
+						"insert into Reserva(idPersona, fechaInicio, fechaFin, idElemento) values (?,?,?,?)",
 						PreparedStatement.RETURN_GENERATED_KEYS
 						);
-				stmt.setInt(1, r.getIdReserva());
-				stmt.setInt(2, r.getPersona().getIdPersona());
-				stmt.setDate(3, r.getFechaInicio());
-				stmt.setDate(4, r.getFechaFin());
-				stmt.setInt(5, r.getElemento().getIdElemento());
+				
+				stmt.setInt(1, r.getPersona().getIdPersona());
+				stmt.setDate(2, r.getFechaInicio());
+				stmt.setDate(3, r.getFechaFin());
+				stmt.setInt(4, r.getElemento().getIdElemento());
 				stmt.executeUpdate();
 				keyResultSet=stmt.getGeneratedKeys();
 				if(keyResultSet!=null && keyResultSet.next()){
@@ -50,7 +50,7 @@ import entities.TipoElemento;
 //				ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 //				try {
 //					stmt =  FactoryConexion.getInstancia().getConn().createStatement();
-//					rs = stmt.executeQuery("select r.idReserva, p.idPersona, p.dni, p.habilitado, p.usuario, p.contraseña, r.fechaInicio, r.fechaFin, e.idElemento, e.capacidad, e.ubicacion, e.descripcion, te.descripcion, te.idTipo from Reserva r left join Persona p on r.idPersona = p.idPersona left join Elemento e on r.idElemento = e.idElemento left join TipoElemento te on e.idTipo = te.idTipo");
+//					rs = stmt.executeQuery("select r.idReserva, p.idPersona, p.dni, p.habilitado, p.usuario, p.contraseï¿½a, r.fechaInicio, r.fechaFin, e.idElemento, e.capacidad, e.ubicacion, e.descripcion, te.descripcion, te.idTipo from Reserva r left join Persona p on r.idPersona = p.idPersona left join Elemento e on r.idElemento = e.idElemento left join TipoElemento te on e.idTipo = te.idTipo");
 //					if(rs!=null){
 //						while(rs.next()){
 //							Reserva r = new Reserva();
@@ -104,7 +104,7 @@ import entities.TipoElemento;
 				ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 				try {
 					stmt =  FactoryConexion.getInstancia().getConn().createStatement();
-					rs = stmt.executeQuery("select idReserva, idPersona, fechaInicio, fechaFin, idElemento from reserva");
+					rs = stmt.executeQuery("select * from reserva");
 					if(rs!=null){
 						while(rs.next()){
 							Reserva r = new Reserva();

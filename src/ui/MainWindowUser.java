@@ -66,7 +66,7 @@ public class MainWindowUser extends JFrame {
 		btnReservas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				abrirReserbas();
+				abrirReservas();
 			}
 		});
 		
@@ -128,7 +128,7 @@ public class MainWindowUser extends JFrame {
 		vc.setVisible(false);
 	}
 
-	protected void abrirReserbas() {
+	protected void abrirReservas() {
 		MainWindowUser vc = new MainWindowUser();
 	//	ABMCReservas reser = new ABMCReservas();
 		ABMCReservas.main(usuActual);
