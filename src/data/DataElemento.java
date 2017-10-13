@@ -14,14 +14,13 @@ public class DataElemento {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"insert into Elemento(idElemento, ubicacion, descripcion, capacidad, idTipo) values (?,?,?,?,?)",
+					"insert into Elemento(ubicacion, descripcion, capacidad, idTipo) values (?,?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
-			stmt.setInt(1, el.getIdElemento());
-			stmt.setString(2, el.getUbicacion());
-			stmt.setString(3, el.getDescripcion());
-			stmt.setInt(4, el.getCapacidad());
-			stmt.setInt(5, el.getTipo().getIdTipo());
+			stmt.setString(1, el.getUbicacion());
+			stmt.setString(2, el.getDescripcion());
+			stmt.setInt(3, el.getCapacidad());
+			stmt.setInt(4, el.getTipo().getIdTipo());
 			stmt.executeUpdate();
 			keyResultSet=stmt.getGeneratedKeys();
 			if(keyResultSet!=null && keyResultSet.next()){

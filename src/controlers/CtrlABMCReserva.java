@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.DataReserva;
 import entities.Reserva;
+import entities.Persona;
 
 public class CtrlABMCReserva {
 	
@@ -28,4 +29,15 @@ public class CtrlABMCReserva {
 		datar.delete(r);
 	}
 	
+	public ArrayList<Reserva> getAll(Persona per){
+		ArrayList<Reserva> resers = datar.getAll();
+		ArrayList<Reserva> reserPer = new ArrayList<Reserva>();
+		for (Reserva reserva : resers) {
+			if(reserva.getPersona().getIdPersona() == per.getIdPersona())
+			{
+				reserPer.add(reserva);
+			}
+		}
+		return reserPer;
+	}
 }

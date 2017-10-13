@@ -15,15 +15,16 @@ public class DataTipoElemento {
 		ArrayList<TipoElemento> tipoelementos = new ArrayList<TipoElemento>();
 		try {
 			stmt = FactoryConexion.getInstancia().getConn().createStatement();
-			rs = stmt.executeQuery("select * from TipoElemento");
+			rs = stmt.executeQuery("select * from tipoelemento");
 			if(rs!=null){
 				while(rs.next()){
 					TipoElemento te = new TipoElemento();
 					te.setIdTipo(rs.getInt("idTipo"));
 					te.setDescTipo(rs.getString("descripcion"));
+					te.setCantdiasMax(rs.getInt("cantDiasMax"));
 					tipoelementos.add(te);
 				}
-		} 
+			} 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,11 +72,12 @@ public class DataTipoElemento {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"insert into TipoElemento(idTipo, descripcion) values (?,?)",
+					"insert into TipoElemento(idTipo, descripcion, cantDiasMax) values (?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
 			stmt.setInt(1, tipoe.getIdTipo());
 			stmt.setString(2, tipoe.getDescTipo());
+			stmt.setInt(3, tipoe.getCantdiasMax());
 			stmt.executeUpdate();
 			keyResultSet=stmt.getGeneratedKeys();
 			if(keyResultSet!=null && keyResultSet.next()){

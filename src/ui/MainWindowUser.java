@@ -30,24 +30,40 @@ public class MainWindowUser extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(Persona usuAct) {
+	public static void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindowUser frame = new MainWindowUser();
-					frame.setVisible(true);
-					usuActual = usuAct;
+//					MainWindowUser frame = new MainWindowUser();
+//					frame.setVisible(true);
+//					usuActual = usuAct;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public MainWindowUser() {
+	public MainWindowUser(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		JPanel contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JButton btnAbmcPersona = new JButton("ABMC PERSONA");
+		btnAbmcPersona.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				abrirABMCPERSONA();
+			}
+		});
+	}
+	public MainWindowUser(Persona usuAct) {
+		usuActual = usuAct;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		JPanel contentPane = new JPanel();
@@ -66,7 +82,7 @@ public class MainWindowUser extends JFrame {
 		btnReservas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				abrirReserbas();
+				abrirReservas();
 			}
 		});
 		
@@ -128,17 +144,17 @@ public class MainWindowUser extends JFrame {
 		vc.setVisible(false);
 	}
 
-	protected void abrirReserbas() {
+	protected void abrirReservas() {
 		MainWindowUser vc = new MainWindowUser();
-	//	ABMCReservas reser = new ABMCReservas();
-		ABMCReservas.main(usuActual);
+		ABMCReservas reser = new ABMCReservas(usuActual);
+		reser.frame.setVisible(true);
 		vc.setVisible(false);
 	}
 
 	protected void abrirABMCPERSONA() {
 		MainWindowUser vc = new MainWindowUser();
 		ABMCPersonaDesktop abmP = new ABMCPersonaDesktop();
-		abmP.main(null);
+		abmP.setVisible(true);
 		vc.setVisible(false);
 	}
 }

@@ -174,7 +174,7 @@ public class DataPersona {
 		try {
 			stmt=FactoryConexion.getInstancia().getConn()
 					.prepareStatement(
-					"update Persona set nombre = ?, apellido = ?, habilitado = ?, usuario=?, contraseÃ±a=? where idPersona = ?");
+					"update persona set nombre = ?, apellido = ?, habilitado = ?, usuario=?, contraseña=? where idPersona = ?");
 			stmt.setString(1, per.getNombre());
 			stmt.setString(2, per.getApellido());	
 			stmt.setBoolean(3, per.isHabilitado());

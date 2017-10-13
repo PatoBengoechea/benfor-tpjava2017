@@ -21,12 +21,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.JList;
 import javax.swing.JToolBar;
 import java.awt.FlowLayout;
+import javax.swing.JPasswordField;
 
 public class LoginUsuario extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUsu;
-	private JTextField txtPass;
+	private JPasswordField txtPass;
 	private JLabel lblEncontro_1;
 	public CtrlABMCPersona ctrl;
 	static private Persona usuarioAct;
@@ -70,6 +71,7 @@ public class LoginUsuario extends JFrame {
 		panel.setLayout(null);
 		
 		JButton btnIngresar = new JButton("Ingresar");
+		
 		btnIngresar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -86,7 +88,8 @@ public class LoginUsuario extends JFrame {
 		panel.add(txtUsu);
 		txtUsu.setColumns(10);
 		
-		txtPass = new JTextField();
+		txtPass = new JPasswordField();
+		txtPass.setToolTipText("");
 		txtPass.setBounds(158, 111, 130, 26);
 		panel.add(txtPass);
 		txtPass.setColumns(10);
@@ -114,6 +117,10 @@ public class LoginUsuario extends JFrame {
 		panel.add(btnRegistrarse);
 	}
 
+	public LoginUsuario(Persona usuarioAct2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	protected void registrar() {
 		ABMCPersonaDesktop vc = new ABMCPersonaDesktop();
 		LoginUsuario vlogin = new LoginUsuario();
@@ -126,12 +133,6 @@ public class LoginUsuario extends JFrame {
 		Persona p = new Persona();
 		p.setUsuario(txtUsu.getText());
 		p.setPassword(txtPass.getText());
-//		String user = "";
-//		String pass = "";
-//		user = txtUsu.getText();
-//		pass = txtPass.getText();
-//		Persona usu = new Persona(user, pass);
-		
 		usuarioAct = ctrl.buscarUsuario(p);
 		if(usuarioAct.estaVacio()){
 			lblEncontro_1.setText("Usuario y PassWord incorrectos");
@@ -143,7 +144,8 @@ public class LoginUsuario extends JFrame {
 
 	private void abrirMenu(Persona usuarioAct) {
 		LoginUsuario vlogin = new LoginUsuario();
-		MainWindowUser.main(usuarioAct);
+		MainWindowUser vmain = new MainWindowUser(usuarioAct);
+		vmain.setVisible(true);
 		vlogin.setVisible(false);
 	}
 }

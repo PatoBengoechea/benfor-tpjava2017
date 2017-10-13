@@ -105,7 +105,10 @@ public class Reservar {
 	public Reservar() {
 		initialize();
 	}
-
+	
+	public void hacerVisible(){
+		this.frame.setVisible(true);
+	}
 	/**
 	 * Initialize the contents of the frame.
 	 */

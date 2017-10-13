@@ -48,24 +48,24 @@ public class Reserva {
 	public Elemento getElemento() {
 		return elemento;
 	}
-//	public void setElemento(Elemento elemento) {
-//		this.elemento = elemento;
-//	}
-//	public void setPersona(Persona persona) {
-//		this.persona = persona;
-//	}
-	
-	public void setElemento(int id) {
-		Elemento elemento = new Elemento();
-		elemento.setIdElemento(id);
-		ctrlElemento = new CtrlABMCElemento();
-		this.elemento = ctrlElemento.buscarElemento(elemento);
+	public void setElemento(Elemento elemento) {
+		this.elemento = elemento;
 	}
-	
-	public void setPersona(int id) {
-		Persona persona = new Persona();
-		persona.setIdPersona(id);
-		ctrlPersona=new CtrlABMCPersona();
-		this.persona = ctrlPersona.buscarPersonaID(persona);
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
+//	
+//	public void setElemento(int id) {
+//		Elemento elemento = new Elemento();
+//		elemento.setIdElemento(id);
+//		ctrlElemento = new CtrlABMCElemento();
+//		this.elemento = ctrlElemento.buscarElemento(elemento);
+//	}
+//	
+//	public void setPersona(int id) {
+//		Persona persona = new Persona();
+//		persona.setIdPersona(id);
+//		ctrlPersona=new CtrlABMCPersona();
+//		this.persona = ctrlPersona.buscarPersonaID(persona);
+//	}
 }

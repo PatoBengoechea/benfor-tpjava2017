@@ -134,7 +134,7 @@ public class GestionTipos {
 		diasMax = Integer.parseInt((spinner.getModel().getValue().toString()));
 		TipoElemento tiponuevo = new TipoElemento(desc,diasMax);
 		this.lblResultado.setText("Agrego: " + desc + " Dias Max:  " + diasMax);
-		//ctrltipo.Add(tiponuevo);		
+		ctrltipo.Add(tiponuevo);		
 	}
 	
 	protected void eliminar(){

@@ -13,7 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.LayoutStyle.ComponentPlacement;import javax.xml.bind.ParseConversionEvent;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -215,7 +216,9 @@ public class ABMCPersonaDesktop extends JFrame {
 	}
 	protected void modificarClick()
 	{
-		ctrl.updatePersona(this.mapearDeForm());
+		Persona per = this.mapearDeForm();
+		per.setIdPersona(Integer.parseInt(txtId.getText().toString()));
+		ctrl.updatePersona(per);
 	}
 	protected void buscarClick()
 	{

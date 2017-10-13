@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Label;
+import entities.Persona;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -32,7 +33,7 @@ import javax.swing.JLabel;
 
 public class ABMCReservas {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTable table;
 	static private Persona usuAct;
 	public ArrayList<Reserva> reservasCliente;
@@ -44,14 +45,14 @@ public class ABMCReservas {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(Persona usuActual) {
+	public static void main() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					usuAct = new Persona();
-					usuAct = usuActual;
-					ABMCReservas window = new ABMCReservas();
-					window.frame.setVisible(true);
+//					usuAct = new Persona();
+//					usuAct = usuActual;
+//					ABMCReservas window = new ABMCReservas();
+//					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,19 +66,23 @@ public class ABMCReservas {
 	public ABMCReservas() {
 		initialize();
 	}
+	public ABMCReservas(Persona per) {
+		usuAct = per;
+		this.initialize();
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 600, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame = new JFrame();
+		this.frame.setBounds(100, 100, 600, 400);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		table = new JTable();
 		ctrlR = new CtrlABMCReserva();
 		lblResultado = new JLabel("----");
 		reservasCliente = new ArrayList<Reserva>();
-		actualizarTabla();
+		this.actualizarTabla();
 		
 		
 		JButton btnNewButton = new JButton("Agregar");
@@ -85,8 +90,7 @@ public class ABMCReservas {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Reservar reser = new Reservar();
-				ABMCReservas abmreser = new ABMCReservas();
-				reser.main(null);
+				
 			}
 		});
 		
@@ -137,7 +141,7 @@ public class ABMCReservas {
 	}
 
 	private void actualizarTabla() {
-		reservasCliente = ctrlR.getAll();
+		reservasCliente = ctrlR.getAll(usuAct);
 		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		while(modelo.getRowCount()>0){
 			modelo.removeRow(0);}
