@@ -12,8 +12,6 @@ public class Reserva {
 	Date fechaFin;
 	Elemento elemento;
 	Persona persona;
-	private CtrlABMCElemento ctrlElemento;
-	private CtrlABMCPersona ctrlPersona;
 	
 	public Reserva(Elemento t1, Date datei, Date datef) {
 		this.elemento = t1;
@@ -54,18 +52,5 @@ public class Reserva {
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
-//	
-//	public void setElemento(int id) {
-//		Elemento elemento = new Elemento();
-//		elemento.setIdElemento(id);
-//		ctrlElemento = new CtrlABMCElemento();
-//		this.elemento = ctrlElemento.buscarElemento(elemento);
-//	}
-//	
-//	public void setPersona(int id) {
-//		Persona persona = new Persona();
-//		persona.setIdPersona(id);
-//		ctrlPersona=new CtrlABMCPersona();
-//		this.persona = ctrlPersona.buscarPersonaID(persona);
-//	}
+
 }

@@ -72,7 +72,7 @@ import entities.TipoElemento;
 							p.setHabilitado(rs.getBoolean("p.habilitado"));
 							p.setIdPersona(rs.getInt("p.idPersona"));
 							p.setNombre(rs.getString("p.nombre"));
-							p.setPassword(rs.getString("p.contraseña"));
+							p.setPassword(rs.getString("p.contrase�a"));
 							p.setUsuario(rs.getString("p.usuario"));
 							
 							r.setElemento(e);
@@ -81,7 +81,7 @@ import entities.TipoElemento;
 							r.setFechaInicio(rs.getDate("r.fechaInicio"));
 							r.setIdReserva(rs.getInt("r.idReserva"));
 							
-							e.setReservas(this.getAll(e));
+//							e.setReservas(this.getAll(e));
 						
 							reservas.add(r);
 							}	
@@ -133,10 +133,9 @@ import entities.TipoElemento;
 				ResultSet rs = null;
 				ArrayList<Reserva> susReservas = new ArrayList<Reserva>();
 				try {
-					//stmt =  FactoryConexion.getInstancia().getConn().createStatement();
-					//rs = stmt.executeQuery("select r.idReserva, p.idPersona, p.dni, p.habilitado, p.usuario, p.contraseña, r.fechaInicio, r.fechaFin, e.idElemento, e.capacidad, e.ubicacion, e.descripcion, te.descripcion, te.idTipo from Reserva r left join Persona p on r.idPersona = p.idPersona left join Elemento e on r.idElemento = e.idElemento left join TipoElemento te on e.idTipo = te.idTipo");
+					
 					stmt=FactoryConexion.getInstancia().getConn().prepareStatement
-							("select r.idReserva, p.idPersona, p.dni, p.habilitado, p.usuario, p.contraseña, r.fechaInicio, r.fechaFin, e.idElemento, e.capacidad, e.ubicacion, e.descripcion, te.descripcion, te.idTipo from Reserva r left join Persona p on r.idPersona = p.idPersona left join Elemento e on e.idElemento=? left join TipoElemento te on e.idTipo = te.idTipo");
+							("select r.idReserva, p.nombre, p.idPersona, p.apellido, p.dni, p.habilitado, p.usuario, p.contrase�a, r.fechaInicio, r.fechaFin, e.idElemento, e.capacidad, e.ubicacion, e.descripcion, te.descripcion, te.idTipo from Reserva r left join Persona p on r.idPersona = p.idPersona left join Elemento e on e.idElemento=? left join TipoElemento te on e.idTipo = te.idTipo");
 						stmt.setInt(1, el.getIdElemento());	
 						rs = stmt.executeQuery();
 					if(rs!=null){
@@ -145,7 +144,6 @@ import entities.TipoElemento;
 							Persona p = new Persona();
 							Elemento e = new Elemento();
 							TipoElemento te = new TipoElemento();
-							
 							te.setIdTipo(rs.getInt("te.idTipo"));
 							te.setDescTipo(rs.getString("te.descripcion"));
 							
@@ -160,7 +158,7 @@ import entities.TipoElemento;
 							p.setHabilitado(rs.getBoolean("p.habilitado"));
 							p.setIdPersona(rs.getInt("p.idPersona"));
 							p.setNombre(rs.getString("p.nombre"));
-							p.setPassword(rs.getString("p.contraseña"));
+							p.setPassword(rs.getString("p.contrase�a"));
 							p.setUsuario(rs.getString("p.usuario"));
 							
 							r.setElemento(e);

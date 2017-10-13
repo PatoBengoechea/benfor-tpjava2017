@@ -57,7 +57,7 @@ import javax.swing.ComboBoxModel;
 
 public class Reservar {
 
-	private JFrame frame;
+	public JFrame frame;
 	Object[][] datos = {};
 	private JTextField txtFechaInicio;
 	private DefaultTableModel modelo;

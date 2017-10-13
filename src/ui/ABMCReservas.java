@@ -31,7 +31,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JLabel;
 
-public class ABMCReservas {
+public class ABMCReservas extends JFrame {
 
 	public JFrame frame;
 	private JTable table;
@@ -46,18 +46,6 @@ public class ABMCReservas {
 	 * Launch the application.
 	 */
 	public static void main() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-//					usuAct = new Persona();
-//					usuAct = usuActual;
-//					ABMCReservas window = new ABMCReservas();
-//					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	/**
@@ -82,6 +70,7 @@ public class ABMCReservas {
 		ctrlR = new CtrlABMCReserva();
 		lblResultado = new JLabel("----");
 		reservasCliente = new ArrayList<Reserva>();
+		reservasCliente = ctrlR.getAll(usuAct);
 		this.actualizarTabla();
 		
 		
@@ -90,7 +79,7 @@ public class ABMCReservas {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				Reservar reser = new Reservar();
-				
+				reser.frame.setVisible(true);
 			}
 		});
 		
@@ -142,6 +131,7 @@ public class ABMCReservas {
 
 	private void actualizarTabla() {
 		reservasCliente = ctrlR.getAll(usuAct);
+		lblResultado.setText("Reservas de "+ usuAct.getNombre() + usuAct.getApellido());
 		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		while(modelo.getRowCount()>0){
 			modelo.removeRow(0);}
@@ -149,15 +139,12 @@ public class ABMCReservas {
 				lblResultado.setText("No hay elementos");
 			}
 			else{
-			for (Reserva res : reservasCliente) {
-					if (usuAct.equals(res.getPersona()))
-					{
-					Object[] newRow= {res.getIdReserva(),res.getFechaInicio(),res.getFechaFin(), res.getElemento().getDescripcion(), res.getPersona().getIdPersona()};
-					modelo.addRow(newRow);
-					}
-			}
-					table.setModel(modelo);
-			}
+				for (Reserva res : reservasCliente) {		
+						Object[] newRow= {res.getIdReserva(),res.getFechaInicio(),res.getFechaFin(), res.getElemento().getDescripcion(), res.getPersona().getIdPersona()};
+						modelo.addRow(newRow);
+				}
+						table.setModel(modelo);
+				}
 		}	
 	}
 
