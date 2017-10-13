@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.DataReserva;
 import entities.Reserva;
+import entities.Elemento;
 import entities.Persona;
 
 public class CtrlABMCReserva {
@@ -22,6 +23,10 @@ public class CtrlABMCReserva {
 	public ArrayList<Reserva> getAll()
 	{
 		return datar.getAll();
+	}
+	public ArrayList<Reserva> getAll(Elemento e)
+	{
+		return datar.getAll(e);
 	}
 	
 	public void delete(Reserva r)

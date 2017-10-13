@@ -35,7 +35,7 @@ public class FactoryConexion {
 		try {
 			if(conn==null || conn.isClosed()){	
 				conn = (Connection) DriverManager.getConnection(
-			        "jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+password);
+			        "jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+password+"&useSSL=false");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

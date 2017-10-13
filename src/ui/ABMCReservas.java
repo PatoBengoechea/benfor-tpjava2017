@@ -78,7 +78,7 @@ public class ABMCReservas extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Reservar reser = new Reservar();
+				Reservar reser = new Reservar(usuAct);
 				reser.frame.setVisible(true);
 			}
 		});

@@ -52,11 +52,13 @@ import javax.swing.JTable;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import controlers.CtrlABMCElemento;
+import controlers.CtrlABMCReserva;
 import controlers.CtrlABMCTipoElemento;
 import javax.swing.ComboBoxModel;
 
 public class Reservar {
 
+	public static Persona usuarioAct;
 	public JFrame frame;
 	Object[][] datos = {};
 	private JTextField txtFechaInicio;
@@ -68,6 +70,7 @@ public class Reservar {
 	public ArrayList<Reserva> reservas;
 	public ArrayList<TipoElemento> tiposElementos;
 	public CtrlABMCTipoElemento ctrlTipoElemento;
+	public CtrlABMCReserva ctrlReserva;
 	CtrlABMCElemento ctrlElemento;
 	public ArrayList<String> tipos;
 	private JLabel lblResultado;
@@ -106,9 +109,12 @@ public class Reservar {
 		initialize();
 	}
 	
-	public void hacerVisible(){
-		this.frame.setVisible(true);
+	public Reservar(Persona usuAct) {
+		usuarioAct = usuAct;
+		initialize();
 	}
+
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -122,6 +128,7 @@ public class Reservar {
 		modelo = new DefaultTableModel(datosnuevos, columnNames);
 		tiposElementos = new ArrayList<TipoElemento>();
 		elementos = new ArrayList<Elemento>();
+		ctrlReserva = new CtrlABMCReserva();
 		tipos = new ArrayList<String>();
 		ctrlTipoElemento = new CtrlABMCTipoElemento();
 		cmbTipos = new JComboBox<String>();
@@ -135,7 +142,7 @@ public class Reservar {
 //		Reserva nuevaR = new Reserva(t1, datei , datef);
 //		reservas.add(nuevaR);
 		for (TipoElemento tipo : tiposElementos) {
-			//tipos.add(tipo.getDescTipo());
+			
 			cmbTipos.addItem(tipo.getDescTipo());
 		}
 		
@@ -158,8 +165,10 @@ public class Reservar {
 				Elemento lugarAct = new Elemento();
 				Date dateini = null;
 				Date datefin = null;
-				dateini = obtenerFecha(fechaini);
-				datefin = obtenerFecha(fechafin);
+				dateini = Date.valueOf(fechaini);
+				datefin = Date.valueOf(fechafin);
+//				dateini = obtenerFecha(fechaini);
+//				datefin = obtenerFecha(fechafin);
 				int indice = table_2.convertColumnIndexToModel(table_2.getSelectedRow());
 				TableModel nuevo = table_2.getModel();
 				nuevo = table_2.getModel();
@@ -167,20 +176,25 @@ public class Reservar {
 				
 				String seleccionado = id.toString();
 				lblResultado.setText(seleccionado);
+				Elemento lugar = new Elemento();
 				lugarAct.setIdElemento(seleccionado);
-				ctrlElemento.buscarElemento(lugarAct);
-				Reserva reservaAct = new Reserva(lugarAct,dateini,datefin);
+				lugar = ctrlElemento.buscarElemento(lugarAct);
+				Reserva reservaAct = new Reserva(lugar,dateini,datefin);
+				reservaAct.setPersona(usuarioAct);
+				lblResultado.setText(fechaini + " " + fechafin + usuarioAct.getNombre() + lugar.getDescripcion());
 				if(validarFecha(reservaAct)){
 					lblResultado.setText("fecha disponible y reserva realizada");
-				};
+				}
+				else{
+					lblResultado.setText("fecha no disponible para "+ lugar.getDescripcion());
+					}
 				}
 			}
 
 
 			private Date obtenerFecha(String fec) {
-				//SimpleDateFormat formatoDelTexto = new SimpleDateFormat("yyyy-MM-dd");
 				Date fecha = null;
-				fecha =Date.valueOf(fec);
+				fecha = Date.valueOf(fec);
 			return fecha;
 			}
 		});
@@ -255,7 +269,10 @@ public class Reservar {
 									.addComponent(txtFechaInicio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGap(23)
-									.addComponent(lblFechaInicio)))
+									.addComponent(lblFechaInicio))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(34)
+									.addComponent(lblResultado)))
 							.addGap(25)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 443, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
@@ -267,15 +284,12 @@ public class Reservar {
 							.addContainerGap()
 							.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(33)
-							.addComponent(lblResultado))
-						.addGroup(groupLayout.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(29)
 							.addComponent(lblFechaFin)))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap(20, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -294,14 +308,14 @@ public class Reservar {
 							.addComponent(lblFechaFin)
 							.addGap(18)
 							.addComponent(txtFechaFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(lblResultado)
-							.addGap(32)
-							.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+							.addGap(57)
+							.addComponent(btnComprar, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblResultado))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(18)
 							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 286, GroupLayout.PREFERRED_SIZE)))
-					.addGap(46))
+					.addGap(33))
 		);
 		
 		table_2 = new JTable();
@@ -311,17 +325,15 @@ public class Reservar {
 
 	protected boolean validarFecha(Reserva reservaAct) {
 		Boolean estado = true;
+		reservas = ctrlReserva.getAll(reservaAct.getElemento());
 		for (Reserva res : reservas) {
-			if(reservaAct.getElemento().equals(res.getElemento())){
 				if((res.getFechaInicio().before(reservaAct.getFechaFin()))
-						|| (res.getFechaFin().after(reservaAct.getFechaInicio())))
+						&& (res.getFechaFin().after(reservaAct.getFechaInicio())))
 				{
 					estado = false;
 					return estado;
 				}
-			
 			}
-		}
 		return estado;
 	}
 }
